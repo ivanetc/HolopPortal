@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/core.css">
+</head>
+<body>
+    <div id="header" th:fragment="header">
+      <p th:text="'Информационная система Холоп. Текущий пользователь ' + ${userName}" />
+    </div>
+</body>
+</html>
