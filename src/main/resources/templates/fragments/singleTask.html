@@ -10,10 +10,21 @@
     <h3>Описание:</h3>
     <p th:text="${task.description}"></p>
     <h3>Задействованный персонал</h3>
-    <th:block th:each="employee : ${task.staff}">
-        <!--/*@thymesVar id="employee" type="com.example.holopportal.user.entities.User"*/-->
-        <a th:text="${employee.firstName} + ' ' + ${employee.lastName}"></a>
+    <th:block th:each="status : ${task.executionStatuses}">
+        <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
+        <a th:text="${status.worker.lastName} + ' ' + ${status.worker.lastName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
     </th:block>
+
+    <div sec:authorize="hasAuthority('DIRECTOR')">
+        <button>Отправить задачу</button>
+        <button>Отменить задачу</button>
+    </div>
+    <div sec:authorize="hasAuthority('WORKER')">
+        <button>Начать выполнение задания</button>
+        <button>Завершить задание успешно</button>
+        <button>Завершить задание неуспешно</button>
+    </div>
+
 </div>
 </body>
 </html>

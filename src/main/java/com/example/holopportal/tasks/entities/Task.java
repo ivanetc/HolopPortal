@@ -11,14 +11,15 @@ public class Task {
     public String description;
     public TaskType taskType;
 
-    public List<User> staff;
+    public List<WorkerTaskExecutionStatus> executionStatuses;
 
-    public Task(int id, TaskType taskType, String taskName, String taskCode, String description, List<User> staff) {
+    public Task(int id, TaskType taskType, String taskName, String taskCode, String description,
+                List<WorkerTaskExecutionStatus> executionStatuses) {
         this.id = id;
         this.taskType = taskType;
         this.taskName = taskName;
         this.taskCode = taskCode;
         this.description = description;
-        this.staff = staff;
+        this.executionStatuses = executionStatuses;
     }
 }

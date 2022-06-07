@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.example.holopportal.user.entities.User;
+import com.example.holopportal.user.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,21 +23,19 @@ public class UserService implements UserDetailsService {
 
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder) {
         users = new ArrayList<>();
-        User testUser1 = new User("user", "Alexander", "Ivanets", 0);
-        testUser1.setPassword(bCryptPasswordEncoder.encode("password"));
-        users.add(testUser1);
+        users.add(new User("ivanetsas", "Alexander", "Ivanets", 0, UserRole.Director));
+        users.add(new User("khilike", "Egor", "Khilik", 1, UserRole.Worker));
+        users.add(new User("nosovas", "Svetlana", "Nosova", 2, UserRole.ScreenWriter));
+        users.get(0).setPassword(bCryptPasswordEncoder.encode("password"));
+        users.get(1).setPassword(bCryptPasswordEncoder.encode("password"));
+        users.get(2).setPassword(bCryptPasswordEncoder.encode("password"));
     }
 
     @Autowired
     public BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<User> getAllWorkers() {
-        List<User> workers = new ArrayList<>();
-        workers.add(new User("ivanetsas", "Alexander", "Ivanets", 0));
-        workers.add(new User("KhilikE", "Egor", "Khilik", 1));
-        workers.add(new User("NosovaS", "Svetlana", "Nosova", 2));
-
-        return workers;
+        return users;
     }
 
     @Override

@@ -35,6 +35,10 @@ public class TasksController {
     public String getTasks(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("tasks", tasksService.getAllTasks());
+
+        System.out.println(
+                userService.getCurrentUser().get().getAuthorities().stream().findFirst().get().getAuthority()
+        );
         return "tasks";
     }
 }

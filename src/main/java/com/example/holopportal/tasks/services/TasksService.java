@@ -2,11 +2,15 @@ package com.example.holopportal.tasks.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 
 import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.tasks.entities.TaskExecutionStatus;
 import com.example.holopportal.tasks.entities.TaskType;
+import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.stereotype.Component;
@@ -20,6 +24,7 @@ public class TasksService {
     UserService userService;
 
     public TasksService(UserService userService) {
+        this.userService = userService;
         types = new ArrayList<>();
         types.add(new TaskType(0, "Новая роль"));
         types.add(new TaskType(1, "Задание на сценарий"));
@@ -32,7 +37,7 @@ public class TasksService {
                         "Создать сценарий на первую встречу перевоспитуемого",
                         "welcome-1",
                         loremIpsum,
-                        userService.getAllWorkers()
+                        getWorkerTaskExecutionStatusesWaiting()
                 )
         );
         tasks.add(
@@ -41,9 +46,41 @@ public class TasksService {
                         "Сыграть сцену из сценарий",
                         "welcome-2",
                         loremIpsum,
-                        userService.getAllWorkers()
+                        getWorkerTaskExecutionStatusesDifferent()
                 )
         );
+    }
+
+    private List<WorkerTaskExecutionStatus> getWorkerTaskExecutionStatusesWaiting() {
+        List<WorkerTaskExecutionStatus> result = new ArrayList<>();
+        for (User worker :
+                userService.getAllWorkers()) {
+            result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.WaitingForStart));
+        }
+        return result;
+    }
+
+    private List<WorkerTaskExecutionStatus> getWorkerTaskExecutionStatusesDifferent() {
+        List<WorkerTaskExecutionStatus> result = new ArrayList<>();
+        for (User worker :
+                userService.getAllWorkers()) {
+            switch (worker.id) {
+                case 0:
+                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.Successful));
+                    break;
+                case 1:
+                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.InWork));
+                    break;
+                case 2:
+                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.Failed));
+                    break;
+                default:
+                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.WaitingForConfirmation));
+                    break;
+            }
+        }
+
+        return result;
     }
 
     public List<TaskType> getAllTaskTypes() {
