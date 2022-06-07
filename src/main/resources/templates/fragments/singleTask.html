@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+<div id="singleTaskContainer" th:fragment="singleTask(task)">
+    <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
+    <h2 th:text="'Задание' + ${task.taskCode} + ' - ' + ${task.taskName}"></h2>
+    <h3>Тип задания:</h3>
+    <p th:text="${task.taskType.description}"></p>
+    <h3>Описание:</h3>
+    <p th:text="${task.description}"></p>
+    <h3>Задействованный персонал</h3>
+    <th:block th:each="employee : ${task.staff}">
+        <!--/*@thymesVar id="employee" type="com.example.holopportal.user.entities.User"*/-->
+        <a th:text="${employee.firstName} + ' ' + ${employee.lastName}"></a>
+    </th:block>
+</div>
+</body>
+</html>

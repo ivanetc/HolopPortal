@@ -24,9 +24,17 @@ public class TasksController {
 
     @GetMapping("/tasks/new")
     public String greeting(Model model) {
+        model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", tasksService.getAllTaskTypes());
         model.addAttribute("screenPlayElements", screenPlayService.getAllScreenPlays());
         return "newtask";
+    }
+
+    @GetMapping("/tasks")
+    public String getTasks(Model model) {
+        model.addAttribute("currentUser", userService.getCurrentUser().get());
+        model.addAttribute("tasks", tasksService.getAllTasks());
+        return "tasks";
     }
 }

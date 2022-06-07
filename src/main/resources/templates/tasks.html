@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Holop Portal</title>
+    <title>Holop Portal. Tasks</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script type="text/javascript" src="/js/greeting.js"></script>
@@ -13,8 +13,11 @@
 <div id="main_div">
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div>
-        <h1>Holop greeting page</h1>
-        <p th:text="'Hello, ' + ${currentUser.firstName} + '!'" />
+        <h1>Tasks</h1>
+        <th:block th:each="task : ${tasks}">
+            <div th:replace="fragments/singleTask :: singleTask (task=${task})"></div>
+        </th:block>
+
     </div>
 
 </div>

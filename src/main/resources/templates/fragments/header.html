@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" type="text/css" href="/css/core.css">
 </head>
 <body>
     <div id="header" th:fragment="header">
-      <p th:text="'Информационная система Холоп. Текущий пользователь ' + ${userName}" />
+      <p>Информационная система Холоп </p>
+      <p sec:authorize="isAuthenticated()" th:text="'Текущий пользователь ' + ${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
     </div>
 </body>
 </html>
