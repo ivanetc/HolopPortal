@@ -1,11 +1,14 @@
 package com.example.holopportal.tasks.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.IntStream;
 
 import javax.inject.Inject;
+import javax.management.InstanceNotFoundException;
 
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.entities.TaskExecutionStatus;
@@ -14,6 +17,7 @@ import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.stereotype.Component;
+import sun.tools.jconsole.Worker;
 
 @Component
 public class TasksService {
@@ -89,6 +93,29 @@ public class TasksService {
 
     public List<Task> getAllTasks() {
         return tasks;
+    }
+
+    public void setStatus(User user, int taskId, int statusId) throws InstanceNotFoundException {
+        Task task = getTaskById(taskId).orElseThrow(InstanceNotFoundException::new);
+        TaskExecutionStatus status = getStatusById(statusId).orElseThrow(InstanceNotFoundException::new);
+
+        //remove prev status
+        task.executionStatuses.stream()
+            .filter(workerStatus -> workerStatus.worker.id == user.id)
+            .findFirst()
+            .ifPresent(workerTaskExecutionStatus -> task.executionStatuses.remove(workerTaskExecutionStatus));
+
+        task.executionStatuses.add(new WorkerTaskExecutionStatus(user, status));
+    }
+
+    public Optional<Task> getTaskById(int taskId) {
+        return tasks.stream().filter(task -> task.id == taskId).findFirst();
+    }
+
+    public Optional<TaskExecutionStatus> getStatusById(int statusId) {
+        return Arrays.stream(TaskExecutionStatus.values())
+                .filter(status -> status.id == statusId)
+                .findFirst();
     }
 
 

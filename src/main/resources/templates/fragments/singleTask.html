@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/tasks.js"></script>
+    <script>
+
+    </script>
+</head>
 <body>
 <div id="singleTaskContainer" th:fragment="singleTask(task)">
     <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
@@ -16,13 +22,13 @@
     </th:block>
 
     <div sec:authorize="hasAuthority('DIRECTOR')">
-        <button>Отправить задачу</button>
-        <button>Отменить задачу</button>
+        <button type="button" th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
+        <button type="button" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
     </div>
     <div sec:authorize="hasAuthority('WORKER')">
-        <button>Начать выполнение задания</button>
-        <button>Завершить задание успешно</button>
-        <button>Завершить задание неуспешно</button>
+        <button type="button" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
+        <button type="button" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
+        <button type="button" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
     </div>
 
 </div>
