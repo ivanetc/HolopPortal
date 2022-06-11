@@ -3,10 +3,21 @@
 <head></head>
 <body>
 <div id="menu_container" th:fragment="menu">
-    <h2>Главное меню</h2>
-    <a href="/greeting">Главная страница</a>
-    <a href="/tasks">Задания</a>
-    <a>Прогнозирование</a>
+    <form target="/greeting">
+        <button id="button" >Главная страницa
+        </button>
+    </form>
+
+    <form target="/tasks">
+        <button id="button" >
+            <img src="/images/task_icon.png" alt="Текущие задачи">
+        </button>
+    </form>
+
+    <form target="/tasks">
+        <button id="button" >Прогнозирование
+        </button>
+    </form>
 </div>
 </body>
 </html>

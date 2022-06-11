@@ -13,7 +13,6 @@
 <div id="main_div">
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div>
-        <h1>Tasks</h1>
         <th:block th:each="task : ${tasks}">
             <div th:replace="fragments/singleTask :: singleTask (task=${task})"></div>
         </th:block>
