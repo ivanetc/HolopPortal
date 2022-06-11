@@ -68,7 +68,7 @@ public class TasksService {
         List<WorkerTaskExecutionStatus> result = new ArrayList<>();
         for (User worker :
                 userService.getAllWorkers()) {
-            switch (worker.id) {
+            switch (worker.getId()) {
                 case 0:
                     result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.Successful));
                     break;
@@ -101,7 +101,7 @@ public class TasksService {
 
         //remove prev status
         task.executionStatuses.stream()
-            .filter(workerStatus -> workerStatus.worker.id == user.id)
+            .filter(workerStatus -> workerStatus.worker.getId() == user.getId())
             .findFirst()
             .ifPresent(workerTaskExecutionStatus -> task.executionStatuses.remove(workerTaskExecutionStatus));
 
