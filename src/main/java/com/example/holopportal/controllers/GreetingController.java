@@ -17,15 +17,10 @@ public class GreetingController {
     @Inject
     UserService userService;
 
-    @GetMapping("/greeting")
+    @GetMapping("/")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
-        return "greeting";
-    }
-
-    @GetMapping("/")
-    public String greeting(Model model) {
-        return "temp";
+        return "main";
     }
 
 }

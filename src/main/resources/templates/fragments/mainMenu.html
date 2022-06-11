@@ -3,21 +3,21 @@
 <head></head>
 <body>
 <div id="menu_container" th:fragment="menu">
-    <form target="/greeting">
-        <button id="button" >Главная страницa
-        </button>
-    </form>
+    <a href="/tasks/new" class="button" >
+        <img src="/images/task_icon.png", style="width: 30px; float: left";>Новая задача
+    </a>
+    <a href="/" class="button" >
+        <img src="/images/user_icon.png", style="width: 30px; float: left";>Главная страницa
+    </a>
 
-    <form target="/tasks">
-        <button id="button" >
-            <img src="/images/task_icon.png" alt="Текущие задачи">
-        </button>
-    </form>
+    <a href="/tasks" class= "button" >
+        <img src="/images/current_task_icon.png", style="width: 30px; float: left"; >Текущие задачи
+    </a>
 
-    <form target="/tasks">
-        <button id="button" >Прогнозирование
-        </button>
-    </form>
+    <a href="" class="button">
+        <img src="/images/prediction_icon.png", style="width: 30px;float: left;">Прогнозирование
+    </a>
+
 </div>
 </body>
 </html>

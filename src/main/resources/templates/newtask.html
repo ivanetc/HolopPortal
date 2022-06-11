@@ -11,23 +11,29 @@
 
 <div id="main_div">
   <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-  <div>
-    <form>
-      <select>
-        <th:block th:each="worker : ${workers}">
-          <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
-          <option th:value="${worker.id}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
-        </th:block>
-      </select>
-    </form>
-    <form>
-      <select>
-        <th:block th:each="type : ${taskTypes}">
-          <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
-          <option th:value="${type.id}" th:text="${type.description}"></option>
-        </th:block>
-      </select>
-    </form>
+  <div style="flex-grow: 1">
+    <div id="NewTaskContainer">
+      <p>Новая задача</p>
+      <form>
+        <select class="widthMenu">
+          <th:block th:each="worker : ${workers}">
+            <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
+            <option th:value="${worker.id}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
+          </th:block>
+        </select>
+        <br></br>
+        <select class="widthMenu">
+          <th:block th:each="type : ${taskTypes}">
+            <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
+            <option th:value="${type.id}" th:text="${type.description}"></option>
+          </th:block>
+        </select>
+      </form>
+      <div id="TaskDescription">
+        Описание задачи
+      </div>
+
+    </div>
   </div>
 
 </div>

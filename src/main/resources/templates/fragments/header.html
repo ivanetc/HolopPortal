@@ -7,6 +7,9 @@
     <div id="header" th:fragment="header">
       <p>Информационная система Холоп </p>
       <p sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
+        <a>
+            <img src="/images/user_icon.png", style="width: 30px; float: left";>
+        </a>
     </div>
 </body>
 </html>
