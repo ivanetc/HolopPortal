@@ -6,7 +6,7 @@
 <body>
     <div id="header" th:fragment="header">
       <p>Информационная система Холоп </p>
-      <p sec:authorize="isAuthenticated()" th:text="'Текущий пользователь ' + ${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
+      <p sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
     </div>
 </body>
 </html>

@@ -1,13 +1,13 @@
 #header {
     display: flex;
-    background: bisque;
+    background-color: #ffe2a9;
     height: 50px;
     align-items: center;
 }
 
 #menu_container {
     width: 300px;
-    background: antiquewhite;
+    background-color: #ffcc99;
     display: flex;
     flex-direction: column;
 }
@@ -19,8 +19,30 @@
 
 /* single task component styles */
 #singleTaskContainer {
-    border: 1px double black;
-    border-radius: 1em;
-    margin: 10px;
-    padding: 10px;
+    border: 2px double black;
+    border-radius: 0em;
+    margin: 70px;
+    padding: 5px;
+}
+#NewTaskContainer{
+    border: 2px double black;
+    border-radius: 0em;
+    margin: 70px;
+    padding: 5px;
+}
+
+#button {
+    background: #ffcc99;
+    color: #000000;
+    border: none;
+    padding: 2rem 3.5rem;
+    font-weight: bold;
+}
+
+#button:hover {
+    background: #fdc58d;
+}
+
+#currentUser{
+    text-align: right;
 }
