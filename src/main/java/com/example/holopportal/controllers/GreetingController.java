@@ -25,6 +25,7 @@ public class GreetingController {
 
     @GetMapping("/")
     public String greeting(Model model) {
+        model.addAttribute("currentUser", userService.getCurrentUser().get());
         return "temp";
     }
 

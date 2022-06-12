@@ -33,7 +33,6 @@ public class TasksRestController {
     @PutMapping("/api/tasks/{id}/status")
     public ResponseEntity<?> setStatus(@PathVariable("id") int taskid,
                                        @RequestParam int statusId) throws InstanceNotFoundException {
-
         Optional<User> currentUser = userService.getCurrentUser();
         if (currentUser.isPresent()) {
             tasksService.setStatus(currentUser.get(), taskid, statusId);
@@ -41,6 +40,5 @@ public class TasksRestController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 }

@@ -2,122 +2,86 @@ package com.example.holopportal.tasks.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
-import javax.inject.Inject;
 import javax.management.InstanceNotFoundException;
 
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.entities.TaskExecutionStatus;
-import com.example.holopportal.tasks.entities.TaskType;
 import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
+import com.example.holopportal.tasks.repository.TaskRepo;
+import com.example.holopportal.tasks.repository.TaskStatusRepo;
+import com.example.holopportal.tasks.repository.WorkerTaskStatusRepo;
 import com.example.holopportal.user.entities.User;
-import com.example.holopportal.user.services.UserService;
+import com.example.holopportal.user.entities.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import sun.tools.jconsole.Worker;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class TasksService {
-    List<TaskType> types;
-    List<Task> tasks;
 
-    @Inject
-    UserService userService;
+    TaskRepo taskRepo;
 
-    public TasksService(UserService userService) {
-        this.userService = userService;
-        types = new ArrayList<>();
-        types.add(new TaskType(0, "Новая роль"));
-        types.add(new TaskType(1, "Задание на сценарий"));
-        types.add(new TaskType(2, "Задание на декорации"));
+    TaskStatusRepo taskStatusRepo;
 
-        tasks = new ArrayList<>();
-        tasks.add(
-                new Task(0,
-                        types.get(1),
-                        "Создать сценарий на первую встречу перевоспитуемого",
-                        "welcome-1",
-                        loremIpsum,
-                        getWorkerTaskExecutionStatusesWaiting()
-                )
-        );
-        tasks.add(
-                new Task(1,
-                        types.get(1),
-                        "Сыграть сцену из сценарий",
-                        "welcome-2",
-                        loremIpsum,
-                        getWorkerTaskExecutionStatusesDifferent()
-                )
-        );
+    public WorkerTaskStatusRepo workerTaskStatusRepo;
+
+    @Autowired
+    TasksService(TaskRepo taskRepo, TaskStatusRepo taskStatusRepo, WorkerTaskStatusRepo workerTaskStatusRepo) {
+        this.taskRepo = taskRepo;
+        this.taskStatusRepo = taskStatusRepo;
+        this.workerTaskStatusRepo = workerTaskStatusRepo;
     }
 
-    private List<WorkerTaskExecutionStatus> getWorkerTaskExecutionStatusesWaiting() {
-        List<WorkerTaskExecutionStatus> result = new ArrayList<>();
-        for (User worker :
-                userService.getAllWorkers()) {
-            result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.WaitingForStart));
-        }
-        return result;
-    }
-
-    private List<WorkerTaskExecutionStatus> getWorkerTaskExecutionStatusesDifferent() {
-        List<WorkerTaskExecutionStatus> result = new ArrayList<>();
-        for (User worker :
-                userService.getAllWorkers()) {
-            switch (worker.getId()) {
-                case 0:
-                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.Successful));
-                    break;
-                case 1:
-                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.InWork));
-                    break;
-                case 2:
-                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.Failed));
-                    break;
-                default:
-                    result.add(new WorkerTaskExecutionStatus(worker, TaskExecutionStatus.WaitingForConfirmation));
-                    break;
-            }
-        }
-
-        return result;
-    }
-
-    public List<TaskType> getAllTaskTypes() {
-        return types;
-    }
 
     public List<Task> getAllTasks() {
-        return tasks;
+        return taskRepo.findAll();
     }
 
     public void setStatus(User user, int taskId, int statusId) throws InstanceNotFoundException {
         Task task = getTaskById(taskId).orElseThrow(InstanceNotFoundException::new);
-        TaskExecutionStatus status = getStatusById(statusId).orElseThrow(InstanceNotFoundException::new);
+        TaskExecutionStatus statusToSet = getStatusById(statusId).orElseThrow(InstanceNotFoundException::new);
 
-        //remove prev status
-        task.executionStatuses.stream()
-            .filter(workerStatus -> workerStatus.worker.getId() == user.getId())
-            .findFirst()
-            .ifPresent(workerTaskExecutionStatus -> task.executionStatuses.remove(workerTaskExecutionStatus));
+        List<WorkerTaskExecutionStatus> prevStatusesToRemove = getPrevStatusesToRemove(user, task);
+        List<User> usersToSetStatus = prevStatusesToRemove.stream()
+                .map(status -> status.worker)
+                .collect(Collectors.toList());
 
-        task.executionStatuses.add(new WorkerTaskExecutionStatus(user, status));
+        workerTaskStatusRepo.deleteAll(prevStatusesToRemove);
+        usersToSetStatus.forEach(worker -> createAndSaveNewWorkerTaskStatus(worker, task, statusToSet));
+    }
+
+    private List<WorkerTaskExecutionStatus> getPrevStatusesToRemove(User user, Task task) {
+        int userRoleId = user.getRole().id;
+        if (userRoleId == UserRole.DefaultUserRoles.DIRECTOR.getId()) {
+            return new ArrayList<>(task.workerStatuses);
+        } else if (userRoleId == UserRole.DefaultUserRoles.WORKER.getId() ||
+                userRoleId == UserRole.DefaultUserRoles.SCREEN_WRITER.getId()) {
+            return Collections.singletonList(task.workerStatuses.stream()
+                    .filter(workerStatus -> workerStatus.worker.getId() == user.getId())
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "task not found")));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "task not found");
+        }
+    }
+
+    private void createAndSaveNewWorkerTaskStatus(User user, Task task, TaskExecutionStatus status) {
+        WorkerTaskExecutionStatus newStatus = new WorkerTaskExecutionStatus(user, task, status);
+        workerTaskStatusRepo.save(newStatus);
     }
 
     public Optional<Task> getTaskById(int taskId) {
-        return tasks.stream().filter(task -> task.id == taskId).findFirst();
+        return taskRepo.findById(taskId);
     }
 
     public Optional<TaskExecutionStatus> getStatusById(int statusId) {
-        return Arrays.stream(TaskExecutionStatus.values())
-                .filter(status -> status.id == statusId)
-                .findFirst();
+        return taskStatusRepo.findById(statusId);
     }
-
-
-    private final String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 }

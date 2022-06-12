@@ -1,19 +1,42 @@
 package com.example.holopportal.tasks.entities;
 
-public enum TaskExecutionStatus {
-    WaitingForStart(0, "Ожидает начала"),
-    WaitingForConfirmation(1, "Ожидает подтверждения"),
-    InWork(2, "Выполняется"),
-    Successful(3, "Успешно завершено"),
-    Failed(4, "Неуспешно завершено"),
-    Canceled(5, "Отменена режиссером");
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    public final String description;
-    public final int id;
+@Entity
+@Table(schema = "public", name = "task_execution_statuses")
+public class TaskExecutionStatus {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public int id;
+
+    public String description;
+
+    protected TaskExecutionStatus() {}
 
     TaskExecutionStatus(int id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    public enum DefaultStatusIds {
+        WaitingForStart(0),WaitingForConfirmation(1),
+        InWork(2),
+        Successful(3),
+        Failed(4),
+        Canceled(5);
+
+        private final int id;
+
+        DefaultStatusIds(int id) {this.id = id;}
+
+        public int getId() {
+            return id;
+        }
     }
 }
 

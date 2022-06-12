@@ -25,4 +25,22 @@ public class UserRole {
         this.description = description;
         this.code = code;
     }
+
+    public enum DefaultUserRoles {
+
+        WORKER(0),
+        DIRECTOR(1),
+        SCREEN_WRITER(2),
+        REQUESTER(3);
+
+        public final int id;
+
+        DefaultUserRoles(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
 }

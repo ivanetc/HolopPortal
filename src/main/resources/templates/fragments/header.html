@@ -6,6 +6,7 @@
 <body>
     <div id="header" th:fragment="header">
       <p>Информационная система Холоп </p>
+      <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
       <p sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
     </div>
 </body>

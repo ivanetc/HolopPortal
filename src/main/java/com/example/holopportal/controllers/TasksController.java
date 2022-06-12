@@ -3,6 +3,7 @@ package com.example.holopportal.controllers;
 import javax.inject.Inject;
 
 import com.example.holopportal.screenplay.services.ScreenPlayService;
+import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,16 @@ public class TasksController {
     TasksService tasksService;
 
     @Inject
+    TaskTypeService taskTypeService;
+
+    @Inject
     ScreenPlayService screenPlayService;
 
     @GetMapping("/tasks/new")
     public String greeting(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("workers", userService.getAllWorkers());
-        model.addAttribute("taskTypes", tasksService.getAllTaskTypes());
+        model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
         model.addAttribute("screenPlayElements", screenPlayService.getAllScreenPlays());
         return "newtask";
     }

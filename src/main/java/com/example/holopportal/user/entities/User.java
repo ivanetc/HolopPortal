@@ -67,6 +67,11 @@ public class User implements UserDetails {
         return id;
     }
 
+    public UserRole getRole()
+    {
+        return role;
+    }
+
     @Transient
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

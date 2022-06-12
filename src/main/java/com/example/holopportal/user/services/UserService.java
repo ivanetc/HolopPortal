@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public Iterable<User> getAllWorkers() {
+    public List<User> getAllWorkers() {
         return userRepo.findAll();
     }
 

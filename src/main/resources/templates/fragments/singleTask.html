@@ -10,13 +10,13 @@
 <body>
 <div id="singleTaskContainer" th:fragment="singleTask(task)">
     <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
-    <h2 th:text="'Задание' + ${task.taskCode} + ' - ' + ${task.taskName}"></h2>
+    <h2 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h2>
     <h3>Тип задания:</h3>
     <p th:text="${task.taskType.description}"></p>
     <h3>Описание:</h3>
     <p th:text="${task.description}"></p>
     <h3>Задействованный персонал</h3>
-    <th:block th:each="status : ${task.executionStatuses}">
+    <th:block th:each="status : ${task.workerStatuses}">
         <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
         <a th:text="${status.worker.lastName} + ' ' + ${status.worker.lastName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
     </th:block>
