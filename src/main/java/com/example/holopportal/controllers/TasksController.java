@@ -28,7 +28,7 @@ public class TasksController {
     @GetMapping("/tasks/new")
     public String greeting(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
-        model.addAttribute("workers", userService.getAllWorkers());
+        model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
         model.addAttribute("screenPlayElements", screenPlayService.getAllScreenPlays());
         model.addAttribute("newTaskForm", new NewTaskForm());

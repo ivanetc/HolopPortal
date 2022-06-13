@@ -91,10 +91,10 @@ public class TasksService {
 
     public Optional<Task> createTask(NewTaskForm newTaskForm) {
         Task newTask = new Task();
-        newTask.taskType = newTaskForm.taskType;
-        newTask.description = newTaskForm.description;
-        newTask.name = newTaskForm.name;
-        newTask.code = newTaskForm.code;
+        newTask.taskType = newTaskForm.getTaskType();
+        newTask.description = newTaskForm.getDescription();
+        newTask.name = newTaskForm.getName();
+        newTask.code = newTaskForm.getCode();
 
         Task savedTask = taskRepo.save(newTask);
         return Optional.of(savedTask);
