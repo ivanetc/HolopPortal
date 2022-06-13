@@ -14,44 +14,41 @@
   <div style="flex-grow: 1">
     <div id="NewTaskContainer">
       <p>Новая задача</p>
-      <form>
-        <select multiple class="widthMenu">
-          <th:block th:each="worker : ${workers}">
-            <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
-            <option th:value="${worker.id}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
+      <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
+      <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">
+        <select th:field="*{workers}" multiple class="widthMenu">
+          <th:block th:each="worker : ${all_workers}">
+            <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
+            <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
           </th:block>
         </select>
-        <select class="widthMenu">
+        <select th:field="*{taskType}" class="widthMenu">
           <th:block th:each="type : ${taskTypes}">
-            <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
-            <option th:value="${type.id}" th:text="${type.description}"></option>
+            <!--/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/-->
+            <option th:value="${{type}}" th:text="${type.description}"></option>
           </th:block>
         </select>
-      </form>
-      <br></br>
-      <div>
-        <input type="text">Имя</input>
-        <input type="text">Код задачи</input>
-      </div>
-      <div id="TaskDescription">
-        <input type="text">
-        </input>
-      </div>
-      <div>
-        <div class="box">
-          <input type="number" min="-10" max="10">
-          <input type="number" min="-10" max="10">
-          <input type="number" min="-10" max="10">
+        <div>
+          <input th:field="*{name}" type="text">Имя</input>
+          <input th:field="*{code}" type="text">Код задачи</input>
         </div>
-      </div>
-      <div class="ApplyButtonContainer">
-      <a class="RejectButton">
-        Отмена
-      </a>
-      <a class="AceptButton">
-        Ок
-      </a>
-      </div>
+        <div id="TaskDescription">
+          <input th:field="*{description}" type="text">
+        </div>
+        <div>
+          <div class="box">
+            <input type="number" min="-10" max="10">
+            <input type="number" min="-10" max="10">
+            <input type="number" min="-10" max="10">
+          </div>
+        </div>
+        <div class="ApplyButtonContainer">
+          <input class="RejectButton">Отмена</input>
+          <input type="submit" class="AceptButton">Ок</input>
+        </div>
+
+      </form>
+
     </div>
   </div>
 
