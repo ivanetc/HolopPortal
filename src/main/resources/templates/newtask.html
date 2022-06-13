@@ -15,13 +15,12 @@
     <div id="NewTaskContainer">
       <p>Новая задача</p>
       <form>
-        <select class="widthMenu">
+        <select multiple class="widthMenu">
           <th:block th:each="worker : ${workers}">
             <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
             <option th:value="${worker.id}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
           </th:block>
         </select>
-        <br></br>
         <select class="widthMenu">
           <th:block th:each="type : ${taskTypes}">
             <!--/*@thymesVar id="lastName" type="com.example.holopportal.user.entities.User"*/-->
@@ -29,10 +28,30 @@
           </th:block>
         </select>
       </form>
-      <div id="TaskDescription">
-        Описание задачи
+      <br></br>
+      <div>
+        <input type="text">Имя</input>
+        <input type="text">Код задачи</input>
       </div>
-
+      <div id="TaskDescription">
+        <input type="text">
+        </input>
+      </div>
+      <div>
+        <div class="box">
+          <input type="number" min="-10" max="10">
+          <input type="number" min="-10" max="10">
+          <input type="number" min="-10" max="10">
+        </div>
+      </div>
+      <div class="ApplyButtonContainer">
+      <a class="RejectButton">
+        Отмена
+      </a>
+      <a class="AceptButton">
+        Ок
+      </a>
+      </div>
     </div>
   </div>
 

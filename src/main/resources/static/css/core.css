@@ -29,14 +29,13 @@
     border: 2px double black;
     background: #ffffff;
     padding: 10px;
-    margin: 70px;
+    margin: 50px;
     border-radius: 10px;
 }
 
 .button {
     background: #ffcc99;
     border: none;
-    font-weight: bold;
     text-decoration: none;
     padding: 20px 20px 15px 30px;
     text-align: -webkit-center;
@@ -61,24 +60,48 @@ a.button:hover{
     height: 100px;
 }
 
-#AceptButton{
-    background: #cdffa5;
-    border: none;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 20px 20px 15px 30px;
-    text-align: -webkit-center;
-    color: black;
-    font-size: 16px;
-}
-
-#RejectButton{
+.RejectButton{
     background: #ffcc99;
     border: none;
     font-weight: bold;
     text-decoration: none;
-    padding: 20px 20px 15px 30px;
-    text-align: -webkit-center;
+    padding: 15px 20px 15px 20px;
+    text-align: center;
     color: black;
     font-size: 16px;
+    border-radius: 30px;
+}
+a.RejectButton:hover{
+    background: #ffc993;
+}
+
+.AceptButton{
+    background: #cdffa5;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 15px 35px 15px 35px;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    border-radius: 30px;
+}
+
+a.AceptButton:hover{
+    background: #c1fa93;
+}
+
+#userIconPosition{
+}
+
+#usernamePosition{
+}
+
+#systemName{
+}
+
+.ApplyButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
