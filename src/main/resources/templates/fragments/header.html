@@ -5,9 +5,11 @@
 </head>
 <body>
     <div id="header" th:fragment="header">
-      <p>Информационная система Холоп </p>
-      <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
-      <p sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
+      <p id="systemName">Информационная система Холоп </p>
+      <p id = "usernamePosition" sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
+        <a id = "userIconPosition">
+            <img src="/images/user_icon.png", style="width: 30px; float: left";>
+        </a>
     </div>
 </body>
 </html>
