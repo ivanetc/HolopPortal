@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  psql:
+    image: postgres:13.3
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=holop_app
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+volumes:
+  db-data:

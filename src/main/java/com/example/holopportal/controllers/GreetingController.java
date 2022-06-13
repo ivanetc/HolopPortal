@@ -22,5 +22,4 @@ public class GreetingController {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         return "main";
     }
-
 }
