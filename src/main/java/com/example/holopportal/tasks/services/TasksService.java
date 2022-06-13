@@ -1,7 +1,6 @@
 package com.example.holopportal.tasks.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import javax.management.InstanceNotFoundException;
 
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.entities.TaskExecutionStatus;
-import com.example.holopportal.tasks.entities.TaskType;
 import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
 import com.example.holopportal.tasks.repository.TaskRepo;
 import com.example.holopportal.tasks.repository.TaskStatusRepo;
@@ -21,7 +19,6 @@ import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -93,14 +90,8 @@ public class TasksService {
     }
 
     public Optional<Task> createTask(NewTaskForm newTaskForm) {
-        Optional<TaskType> newTaskType = taskTypeRepo.findById(newTaskForm.taskTypeId);
-
-        if(!newTaskType.isPresent()) {
-            return Optional.empty();
-        }
-
         Task newTask = new Task();
-        newTask.taskType = newTaskType.get();
+        newTask.taskType = newTaskForm.taskType;
         newTask.description = newTaskForm.description;
         newTask.name = newTaskForm.name;
         newTask.code = newTaskForm.code;
