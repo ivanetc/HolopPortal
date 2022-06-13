@@ -11,10 +11,13 @@ import javax.management.InstanceNotFoundException;
 
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.entities.TaskExecutionStatus;
+import com.example.holopportal.tasks.entities.TaskType;
 import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
 import com.example.holopportal.tasks.repository.TaskRepo;
 import com.example.holopportal.tasks.repository.TaskStatusRepo;
+import com.example.holopportal.tasks.repository.TaskTypeRepo;
 import com.example.holopportal.tasks.repository.WorkerTaskStatusRepo;
+import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +35,15 @@ public class TasksService {
 
     public WorkerTaskStatusRepo workerTaskStatusRepo;
 
+    TaskTypeRepo taskTypeRepo;
+
     @Autowired
-    TasksService(TaskRepo taskRepo, TaskStatusRepo taskStatusRepo, WorkerTaskStatusRepo workerTaskStatusRepo) {
+    TasksService(TaskRepo taskRepo, TaskStatusRepo taskStatusRepo, WorkerTaskStatusRepo workerTaskStatusRepo,
+                 TaskTypeRepo taskTypeRepo) {
         this.taskRepo = taskRepo;
         this.taskStatusRepo = taskStatusRepo;
         this.workerTaskStatusRepo = workerTaskStatusRepo;
+        this.taskTypeRepo = taskTypeRepo;
     }
 
 
@@ -83,5 +90,22 @@ public class TasksService {
 
     public Optional<TaskExecutionStatus> getStatusById(int statusId) {
         return taskStatusRepo.findById(statusId);
+    }
+
+    public Optional<Task> createTask(NewTaskForm newTaskForm) {
+        Optional<TaskType> newTaskType = taskTypeRepo.findById(newTaskForm.taskTypeId);
+
+        if(!newTaskType.isPresent()) {
+            return Optional.empty();
+        }
+
+        Task newTask = new Task();
+        newTask.taskType = newTaskType.get();
+        newTask.description = newTaskForm.description;
+        newTask.name = newTaskForm.name;
+        newTask.code = newTaskForm.code;
+
+        Task savedTask = taskRepo.save(newTask);
+        return Optional.of(savedTask);
     }
 }

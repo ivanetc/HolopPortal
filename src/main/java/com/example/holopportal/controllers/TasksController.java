@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import com.example.holopportal.screenplay.services.ScreenPlayService;
 import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
+import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class TasksController {
         model.addAttribute("workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
         model.addAttribute("screenPlayElements", screenPlayService.getAllScreenPlays());
+        model.addAttribute("newTaskForm", new NewTaskForm());
         return "newtask";
     }
 
