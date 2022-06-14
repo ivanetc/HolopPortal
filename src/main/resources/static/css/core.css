@@ -17,6 +17,7 @@
 #main_div {
     display: flex;
     height: 100vh;
+    flex-grow: 1
 }
 
 /* single task component styles */

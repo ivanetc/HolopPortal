@@ -12,19 +12,19 @@
 
 <div id="main_div">
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-    <div style="flex-grow: 1">
+    <div>
         <div><img class="predictImage" src="/images/predict_1.png"></img></div>
         <div class="qualitiesNumbers">
             <div class="qualitiesBox">
-                <input class="boxElements" type="number" min="-10" max="10">
+                <p th:value="${{kindness}}></p>
                 <p class="qualitiesLabel">Доброта</p>
             </div>
             <div class="qualitiesBox">
-                <input class="boxElements" type="number" min="-10" max="10">
+                <p th:value="${{love}}></p>
                 <p class="qualitiesLabel">Любовь</p>
             </div>
             <div class="qualitiesBox">
-                <input class="boxElements" type="number" min="-10" max="10">
+                <p th:value="${{honesty}}></p>
                 <p class="qualitiesLabel">Честность</p>
             </div>
         </div>

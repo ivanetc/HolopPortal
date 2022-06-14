@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+
 public class PredictionController {
 
     @Inject
@@ -23,3 +24,10 @@ public class PredictionController {
         return "prediction";
     }
 }
+
+class PredictionView {
+    public int love = 4;
+    public int kindness = 2;
+    public int  honesty = 1;
+}
+
