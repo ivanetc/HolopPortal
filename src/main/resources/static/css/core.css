@@ -152,3 +152,13 @@ a.AceptButton:hover{
     margin: 15px 50px 0px 10px;
     border-radius: 7px;
 }
+
+.predictImage{
+    width: 60%;
+    margin: 50px 200px;
+}
+
+.infoPredictionText{
+    margin: 30px 170px;
+    font-size: large;
+}

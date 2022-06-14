@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Предсказание</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script type="text/javascript" src="/js/greeting.js"></script>
+
 </head>
 <body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div style="flex-grow: 1">
+        <div><img class="predictImage" src="/images/predict_1.png"></img></div>
+        <div class="qualitiesNumbers">
+            <div class="qualitiesBox">
+                <input class="boxElements" type="number" min="-10" max="10">
+                <p class="qualitiesLabel">Доброта</p>
+            </div>
+            <div class="qualitiesBox">
+                <input class="boxElements" type="number" min="-10" max="10">
+                <p class="qualitiesLabel">Любовь</p>
+            </div>
+            <div class="qualitiesBox">
+                <input class="boxElements" type="number" min="-10" max="10">
+                <p class="qualitiesLabel">Честность</p>
+            </div>
+        </div>
+        <p class="infoPredictionText">До плоного перевоспитания осталось 22 дня</p>
+</div>
 
 </body>
 </html>
