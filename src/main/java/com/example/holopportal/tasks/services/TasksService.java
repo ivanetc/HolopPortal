@@ -95,6 +95,9 @@ public class TasksService {
         newTask.description = newTaskForm.getDescription();
         newTask.name = newTaskForm.getName();
         newTask.code = newTaskForm.getCode();
+        newTask.kindnessImpactValue = newTaskForm.getKindnessImpactValue();
+        newTask.loveImpactValue = newTaskForm.getLoveImpactValue();
+        newTask.honestImpactValue = newTaskForm.getHonestImpactValue();
 
         Task savedTask = taskRepo.save(newTask);
         return Optional.of(savedTask);

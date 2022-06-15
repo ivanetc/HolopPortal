@@ -7,6 +7,7 @@ import javax.management.InstanceNotFoundException;
 import javax.swing.text.html.Option;
 
 import com.example.holopportal.screenplay.services.ScreenPlayService;
+import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -49,9 +52,19 @@ public class TasksRestController {
     }
 
     @PostMapping()
-    public String createTask(Model model, @ModelAttribute NewTaskForm newTaskForm) {
+    public RedirectView createTask(Model model, @ModelAttribute NewTaskForm newTaskForm) {
 
-        tasksService.createTask(newTaskForm);
-        return "redirect:/tasks/";
+        Optional<Task> createdTask = tasksService.createTask(newTaskForm);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+
+        if (createdTask.isPresent()) {
+            redirectView.setUrl("/tasks/" + createdTask.get().id + "?isNew=true" );
+        } else {
+            redirectView.setUrl("/tasks");
+        }
+
+        return redirectView;
     }
 }

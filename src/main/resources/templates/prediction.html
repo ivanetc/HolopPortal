@@ -15,20 +15,21 @@
     <div>
         <div><img class="predictImage" src="/images/predict_1.png"></img></div>
         <div class="qualitiesNumbers">
+            <!--/*@thymesVar id="predictionInfo" type="com.example.holopportal.controllers.PredictionView"*/-->
             <div class="qualitiesBox">
-                <p th:value="${{kindness}}></p>
+                <p th:text="${predictionInfo.kindness_current} + ' / ' + ${predictionInfo.kindness_target}"></p>
                 <p class="qualitiesLabel">Доброта</p>
             </div>
             <div class="qualitiesBox">
-                <p th:value="${{love}}></p>
+                <p th:text="${predictionInfo.love_current} + ' / ' + ${predictionInfo.love_target}"></p>
                 <p class="qualitiesLabel">Любовь</p>
             </div>
             <div class="qualitiesBox">
-                <p th:value="${{honesty}}></p>
+                <p th:text="${predictionInfo.honesty_current} + ' / ' + ${predictionInfo.honesty_target}"></p>
                 <p class="qualitiesLabel">Честность</p>
             </div>
         </div>
-        <p class="infoPredictionText">До плоного перевоспитания осталось 22 дня</p>
+        <p class="infoPredictionText">До полного перевоспитания осталось 22 дня</p>
 </div>
 
 </body>

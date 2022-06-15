@@ -20,6 +20,10 @@
     flex-grow: 1
 }
 
+#content_container {
+    flex-grow: 1;
+}
+
 /* single task component styles */
 #singleTaskContainer {
     border: 2px double black;
@@ -115,6 +119,11 @@ a.AceptButton:hover{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.newTaskSuccessfullyAddedNotification {
+    background: yellowgreen;
+    padding: 15px 0 15px 70px;
 }
 
 .textAreaStyle{

@@ -1,34 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Holop Portal. Tasks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="/js/tasks.js"></script>
-    <script>
-
-    </script>
 </head>
 <body>
-<div id="singleTaskContainer" th:fragment="singleTask(task)">
-    <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
-    <h2 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h2>
-    <h3>Тип задания:</h3>
-    <p th:text="${task.taskType.description}"></p>
-    <h3>Описание:</h3>
-    <p th:text="${task.description}"></p>
-    <h3>Задействованный персонал</h3>
-    <th:block th:each="status : ${task.workerStatuses}">
-        <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
-        <a th:text="${status.worker.lastName} + ' ' + ${status.worker.lastName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
-    </th:block>
+<div th:replace="fragments/header :: header">&nbsp;</div>
 
-    <div sec:authorize="hasAuthority('DIRECTOR')">
-        <button type="button" th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
-        <button type="button" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
-    </div>
-    <div sec:authorize="hasAuthority('WORKER')">
-        <button type="button" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
-        <button type="button" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
-        <button type="button" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
+            Задание успешно создано
+        </div>
+        <div id="singleTaskContainer" th:fragment="singleTask(task)">
+            <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
+            <a th:href="@{/tasks/{id}(id=${task.id})}"><h2 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h2></a>
+            <h3>Тип задания:</h3>
+            <p th:text="${task.taskType.description}"></p>
+            <h3>Описание:</h3>
+            <p th:text="${task.description}"></p>
+            <h3>Задействованный персонал</h3>
+            <th:block th:each="status : ${task.workerStatuses}">
+                <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
+                <a th:text="${status.worker.lastName} + ' ' + ${status.worker.lastName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
+            </th:block>
+            <h3>Влияние на перевоспитание</h3>
+            <div class="qualitiesNumbers">
+                <div class="qualitiesBox">
+                    <p th:text="${task.kindnessImpactValue}"></p>
+                    <p class="qualitiesLabel">Доброта</p>
+                </div>
+                <div class="qualitiesBox">
+                    <p th:text="${task.loveImpactValue}"></p>
+                    <p class="qualitiesLabel">Любовь</p>
+                </div>
+                <div class="qualitiesBox">
+                    <p th:text="${task.honestImpactValue}"></p>
+                    <p class="qualitiesLabel">Честность</p>
+                </div>
+            </div>
+        </div>
+
+            <div sec:authorize="hasAuthority('DIRECTOR')">
+                <button type="button" th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
+                <button type="button" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
+            </div>
+            <div sec:authorize="hasAuthority('WORKER')">
+                <button type="button" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
+                <button type="button" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
+                <button type="button" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
+            </div>
+
+        </div>
     </div>
 
 </div>

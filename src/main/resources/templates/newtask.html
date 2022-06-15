@@ -40,15 +40,15 @@
         <div>
           <div class="qualitiesNumbers">
             <div class="qualitiesBox">
-              <input class="boxElements" type="number" min="-10" max="10">
+              <input th:field="*{loveImpactValue}" class="boxElements" type="number" min="-10" max="10">
               <p class="qualitiesLabel">Доброта</p>
             </div>
             <div class="qualitiesBox">
-              <input class="boxElements" type="number" min="-10" max="10">
+              <input th:field="*{honestImpactValue}" class="boxElements" type="number" min="-10" max="10">
               <p class="qualitiesLabel">Любовь</p>
             </div>
             <div class="qualitiesBox">
-              <input class="boxElements" type="number" min="-10" max="10">
+              <input th:field="*{kindnessImpactValue}" class="boxElements" type="number" min="-10" max="10">
               <p class="qualitiesLabel">Честность</p>
             </div>
           </div>
