@@ -100,6 +100,15 @@ public class TasksService {
         newTask.honestImpactValue = newTaskForm.getHonestImpactValue();
 
         Task savedTask = taskRepo.save(newTask);
+
+        TaskExecutionStatus confirmWaiting = taskStatusRepo.findById(TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "task not found"));
+        for (User worker :
+                newTaskForm.getWorkers()) {
+            WorkerTaskExecutionStatus workerStatus = new WorkerTaskExecutionStatus(worker, savedTask, confirmWaiting);
+            WorkerTaskExecutionStatus savedStatus = workerTaskStatusRepo.save(workerStatus);
+            savedTask.workerStatuses.add(savedStatus);
+        }
         return Optional.of(savedTask);
     }
 }

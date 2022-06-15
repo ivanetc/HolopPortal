@@ -21,6 +21,8 @@
             <a th:href="@{/tasks/{id}(id=${task.id})}"><h2 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h2></a>
             <h3>Тип задания:</h3>
             <p th:text="${task.taskType.description}"></p>
+            <h3>Статус:</h3>
+            <p th:text="${task.getCommonStatus().description}"></p>
             <h3>Описание:</h3>
             <p th:text="${task.description}"></p>
             <h3>Задействованный персонал</h3>
@@ -43,7 +45,6 @@
                     <p class="qualitiesLabel">Честность</p>
                 </div>
             </div>
-        </div>
 
             <div sec:authorize="hasAuthority('DIRECTOR')">
                 <button type="button" th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
@@ -54,7 +55,6 @@
                 <button type="button" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
                 <button type="button" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
             </div>
-
         </div>
     </div>
 
