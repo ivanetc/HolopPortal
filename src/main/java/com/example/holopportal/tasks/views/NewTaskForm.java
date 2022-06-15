@@ -11,6 +11,9 @@ public class NewTaskForm {
     private String description;
     private TaskType taskType;
     private List<User> workers;
+    private int loveImpactValue;
+    private int honestImpactValue;
+    private int kindnessImpactValue;
 
     public String getName() {
         return name;
@@ -50,5 +53,29 @@ public class NewTaskForm {
 
     public void setWorkers(List<User> workers) {
         this.workers = workers;
+    }
+
+    public int getLoveImpactValue() {
+        return loveImpactValue;
+    }
+
+    public void setLoveImpactValue(int loveImpactValue) {
+        this.loveImpactValue = loveImpactValue;
+    }
+
+    public int getHonestImpactValue() {
+        return honestImpactValue;
+    }
+
+    public void setHonestImpactValue(int honestImpactValue) {
+        this.honestImpactValue = honestImpactValue;
+    }
+
+    public int getKindnessImpactValue() {
+        return kindnessImpactValue;
+    }
+
+    public void setKindnessImpactValue(int kindnessImpactValue) {
+        this.kindnessImpactValue = kindnessImpactValue;
     }
 }

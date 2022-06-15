@@ -1,8 +1,11 @@
-package com.example.holopportal.controllers;
+package com.example.holopportal.controllers.routing;
+
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import com.example.holopportal.screenplay.services.ScreenPlayService;
+import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
@@ -10,8 +13,12 @@ import com.example.holopportal.user.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/tasks")
 public class TasksController {
     @Inject
     UserService userService;
@@ -25,7 +32,7 @@ public class TasksController {
     @Inject
     ScreenPlayService screenPlayService;
 
-    @GetMapping("/tasks/new")
+    @GetMapping("/new")
     public String greeting(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
@@ -35,11 +42,28 @@ public class TasksController {
         return "newtask";
     }
 
-    @GetMapping("/tasks")
+    @GetMapping()
     public String getTasks(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("tasks", tasksService.getAllTasks());
+        System.out.println(userService.getCurrentUser().get().getAuthorities());
+
         return "tasks";
+    }
+
+    @GetMapping("/{id}")
+    public String getTasks(Model model, @PathVariable int id, @RequestParam(required = false) boolean isNew) {
+        model.addAttribute("currentUser", userService.getCurrentUser().get());
+        model.addAttribute("isNew", isNew);
+
+        Optional<Task> task = tasksService.getTaskById(id);
+        if (task.isPresent()) {
+            model.addAttribute("task", task.get());
+            return "fragments/singleTask";
+        } else {
+            model.addAttribute("tasks", tasksService.getAllTasks());
+            return "tasks";
+        }
     }
 
 

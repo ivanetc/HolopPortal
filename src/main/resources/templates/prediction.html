@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Предсказание</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script type="text/javascript" src="/js/greeting.js"></script>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div>
+        <div><img class="predictImage" src="/images/predict_1.png"></img></div>
+        <div class="qualitiesNumbers">
+            <!--/*@thymesVar id="predictionInfo" type="com.example.holopportal.controllers.PredictionView"*/-->
+            <div class="qualitiesBox">
+                <p th:text="${predictionInfo.kindness_current} + ' / ' + ${predictionInfo.kindness_target}"></p>
+                <p class="qualitiesLabel">Доброта</p>
+            </div>
+            <div class="qualitiesBox">
+                <p th:text="${predictionInfo.love_current} + ' / ' + ${predictionInfo.love_target}"></p>
+                <p class="qualitiesLabel">Любовь</p>
+            </div>
+            <div class="qualitiesBox">
+                <p th:text="${predictionInfo.honesty_current} + ' / ' + ${predictionInfo.honesty_target}"></p>
+                <p class="qualitiesLabel">Честность</p>
+            </div>
+        </div>
+        <p class="infoPredictionText">До полного перевоспитания осталось 22 дня</p>
+</div>
+
+</body>
+</html>

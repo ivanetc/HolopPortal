@@ -11,17 +11,19 @@
 
 <div id="main_div">
   <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-  <div style="flex-grow: 1">
+  <div>
     <div id="NewTaskContainer">
-      <p>Новая задача</p>
+      <p style="font-weight: bold">Новая задача</p>
       <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
       <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">
+        <p class="personalAndTypeText">Персонал:</p>
         <select th:field="*{workers}" multiple class="widthMenu">
           <th:block th:each="worker : ${all_workers}">
             <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
             <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
           </th:block>
         </select>
+        <p class="personalAndTypeText">Тип задачи:</p>
         <select th:field="*{taskType}" class="widthMenu">
           <th:block th:each="type : ${taskTypes}">
             <!--/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/-->
@@ -29,29 +31,34 @@
           </th:block>
         </select>
         <div>
-          <input th:field="*{name}" type="text">Имя</input>
-          <input th:field="*{code}" type="text">Код задачи</input>
+          <label>Имя</label>
+          <input th:field="*{name}" type="text" class="codeAndNameTask"></input>
+          <label>Код задачи</label>
+          <input th:field="*{code}" type="text" class="codeAndNameTask"></input>
         </div>
-        <div id="TaskDescription">
-          <input th:field="*{description}" type="text">
-        </div>
+          <textarea th:field="*{description}" class="textAreaStyle"></textarea>
         <div>
-          <div class="box">
-            <input type="number" min="-10" max="10">
-            <input type="number" min="-10" max="10">
-            <input type="number" min="-10" max="10">
+          <div class="qualitiesNumbers">
+            <div class="qualitiesBox">
+              <input th:field="*{loveImpactValue}" class="boxElements" type="number" min="-10" max="10">
+              <p class="qualitiesLabel">Доброта</p>
+            </div>
+            <div class="qualitiesBox">
+              <input th:field="*{honestImpactValue}" class="boxElements" type="number" min="-10" max="10">
+              <p class="qualitiesLabel">Любовь</p>
+            </div>
+            <div class="qualitiesBox">
+              <input th:field="*{kindnessImpactValue}" class="boxElements" type="number" min="-10" max="10">
+              <p class="qualitiesLabel">Честность</p>
+            </div>
           </div>
         </div>
         <div class="ApplyButtonContainer">
-          <input class="RejectButton">Отмена</input>
-          <input type="submit" class="AceptButton">Ок</input>
+          <input type="submit" class="AceptButton"></input>
         </div>
-
       </form>
-
     </div>
   </div>
-
 </div>
 </body>
 </html>

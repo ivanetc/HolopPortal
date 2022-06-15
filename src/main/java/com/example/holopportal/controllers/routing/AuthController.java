@@ -1,4 +1,4 @@
-package com.example.holopportal.controllers;
+package com.example.holopportal.controllers.routing;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
