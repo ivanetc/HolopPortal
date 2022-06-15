@@ -48,6 +48,20 @@ public class TasksService {
         return taskRepo.findAll();
     }
 
+    public List<Task> getAllUserTasks(User user) {
+        if (user.getRole().id == UserRole.DefaultUserRoles.DIRECTOR.getId()) {
+            return getAllTasks();
+        }
+
+        if (user.getRole().id == UserRole.DefaultUserRoles.WORKER.getId()) {
+            return taskRepo.findAll().stream()
+                    .filter(task->task.workerStatuses.stream().anyMatch(status->status.worker.getId() == user.getId()))
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList();
+    }
+
     public void setStatus(User user, int taskId, int statusId) throws InstanceNotFoundException {
         Task task = getTaskById(taskId).orElseThrow(InstanceNotFoundException::new);
         TaskExecutionStatus statusToSet = getStatusById(statusId).orElseThrow(InstanceNotFoundException::new);

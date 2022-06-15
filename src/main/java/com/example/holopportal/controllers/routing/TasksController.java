@@ -9,13 +9,16 @@ import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
+import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/tasks")
@@ -44,16 +47,26 @@ public class TasksController {
 
     @GetMapping()
     public String getTasks(Model model) {
-        model.addAttribute("currentUser", userService.getCurrentUser().get());
-        model.addAttribute("tasks", tasksService.getAllTasks());
-        System.out.println(userService.getCurrentUser().get().getAuthorities());
+        User currentUser = getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("tasks", tasksService.getAllUserTasks(currentUser));
 
         return "tasks";
     }
 
+    private User getCurrentUser() {
+        Optional<User> currentUser = userService.getCurrentUser();
+        if (!currentUser.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "please login");
+        }
+
+        return currentUser.get();
+    }
+
     @GetMapping("/{id}")
     public String getTasks(Model model, @PathVariable int id, @RequestParam(required = false) boolean isNew) {
-        model.addAttribute("currentUser", userService.getCurrentUser().get());
+        User currentUser = getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("isNew", isNew);
 
         Optional<Task> task = tasksService.getTaskById(id);
@@ -61,7 +74,7 @@ public class TasksController {
             model.addAttribute("task", task.get());
             return "fragments/singleTask";
         } else {
-            model.addAttribute("tasks", tasksService.getAllTasks());
+            model.addAttribute("tasks", tasksService.getAllUserTasks(currentUser));
             return "tasks";
         }
     }

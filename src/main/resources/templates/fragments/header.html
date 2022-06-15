@@ -6,7 +6,8 @@
 <body>
     <div id="header" th:fragment="header">
       <p id="systemName">Информационная система Холоп </p>
-      <p id = "usernamePosition" sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}" />
+      <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
+      <p id = "usernamePosition" sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName} + ' (' + ${currentUser.role.description} + ')' "/>
         <a href="/logout" id = "userIconPosition">
             <img src="/images/user_icon.png", style="width: 30px; float: left";>
         </a>

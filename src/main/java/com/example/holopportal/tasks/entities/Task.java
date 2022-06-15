@@ -94,7 +94,7 @@ public class Task {
         }
 
         if (workerStatuses.stream()
-                .allMatch(workerStatus -> workerStatus.taskExecutionStatus.id == TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId())) {
+                .allMatch(workerStatus -> workerStatus.taskExecutionStatus.id == TaskExecutionStatus.DefaultStatusIds.Successful.getId())) {
             Optional<WorkerTaskExecutionStatus> successStatus = workerStatuses.stream().findFirst();
             if (successStatus.isPresent()) {
                 return successStatus.get().taskExecutionStatus;
