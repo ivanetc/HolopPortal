@@ -24,13 +24,13 @@ public class TaskExecutionStatus {
     }
 
     public enum DefaultStatusIds {
-        WaitingForStart(0),WaitingForConfirmation(1),
+        WaitingForStart(0), WaitingForConfirmation(1),
         InWork(2),
         Successful(3),
         Failed(4),
         Canceled(5);
 
-        private final int id;
+        public final int id;
 
         DefaultStatusIds(int id) {this.id = id;}
 

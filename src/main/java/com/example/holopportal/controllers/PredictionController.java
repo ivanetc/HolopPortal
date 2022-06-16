@@ -23,7 +23,7 @@ public class PredictionController {
     PredictionService predictionService;
 
     @GetMapping("/prediction")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String predict(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("predictionInfo", predictionService.getCurrentPrediction());
         return "prediction";

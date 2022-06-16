@@ -33,6 +33,7 @@ public class PredictionService {
                 currentHonestyValue += task.honestImpactValue;
             }
         }
+        // здесь скалькулировать процент выполнения
         return new PredictionView(currentLoveValue, currentKindnessValue, currentHonestyValue, loveTarget,
                 kindnessTarget, honestyTarget);
     }

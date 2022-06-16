@@ -125,4 +125,31 @@ public class TasksService {
         }
         return Optional.of(savedTask);
     }
+
+    public boolean isPossibleToSetStatus(Task task, User user, TaskExecutionStatus statusToCheck) {
+        Optional<WorkerTaskExecutionStatus> workerStatusOpt = task.workerStatuses.stream()
+                .filter(status -> status.worker.getId() == user.getId())
+                .findFirst();
+
+        if (!workerStatusOpt.isPresent()) {
+            return false;
+        }
+        WorkerTaskExecutionStatus workerStatus = workerStatusOpt.get();
+
+        if (statusToCheck.id == TaskExecutionStatus.DefaultStatusIds.InWork.getId()) {
+            return workerStatus.id == TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId();
+        }
+
+        if (statusToCheck.id == TaskExecutionStatus.DefaultStatusIds.Successful.getId() ||
+                statusToCheck.id == TaskExecutionStatus.DefaultStatusIds.Failed.getId()) {
+            return workerStatus.id == TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId();
+        }
+
+        if (statusToCheck.id == TaskExecutionStatus.DefaultStatusIds.Canceled.getId()) {
+            return task.getCommonStatus().id != TaskExecutionStatus.DefaultStatusIds.Successful.getId() &&
+                    task.getCommonStatus().id != TaskExecutionStatus.DefaultStatusIds.Failed.getId();
+        }
+
+        return false;
+    }
 }

@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.example.holopportal.user.entities.User;
 
 
 @Entity
@@ -45,6 +46,15 @@ public class Task {
         loveImpactValue = 0;
         honestImpactValue = 0;
         kindnessImpactValue = 0;
+    }
+
+    public TaskExecutionStatus getStatusForUser(User user) {
+        Optional<TaskExecutionStatus> statusOptional = workerStatuses.stream()
+                .filter(status -> status.worker.getId() == user.getId())
+                .map(status -> status.taskExecutionStatus)
+                .findFirst();
+
+        return statusOptional.orElseGet(this::getCommonStatus);
     }
 
     public TaskExecutionStatus getCommonStatus() {

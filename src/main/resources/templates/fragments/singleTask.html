@@ -28,7 +28,7 @@
             <h3>Задействованный персонал</h3>
             <th:block th:each="status : ${task.workerStatuses}">
                 <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
-                <a th:text="${status.worker.lastName} + ' ' + ${status.worker.lastName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
+                <a th:text="${status.worker.lastName} + ' ' + ${status.worker.firstName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
             </th:block>
             <h3>Влияние на перевоспитание</h3>
             <div class="qualitiesNumbers">
@@ -47,13 +47,13 @@
             </div>
 
             <div sec:authorize="hasAuthority('DIRECTOR')">
-                <button type="button" th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
-                <button type="button" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
+                <button type="button" disabled th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
+                <button type="button" th:disabled="${(task.getCommonStatus().id == 3 || task.getCommonStatus().id == 4 || task.getCommonStatus().id == 5)}" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
             </div>
             <div sec:authorize="hasAuthority('WORKER')">
-                <button type="button" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
-                <button type="button" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
-                <button type="button" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
+                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 1)}" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
+                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
+                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
             </div>
         </div>
     </div>
