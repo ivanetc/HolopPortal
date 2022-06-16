@@ -1,7 +1,6 @@
 package com.example.holopportal.tasks.entities;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -12,10 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
+import com.example.holopportal.screenplay.entities.Screenplay;
 import com.example.holopportal.user.entities.User;
 
 
@@ -37,6 +39,9 @@ public class Task {
 
     @OneToOne
     public TaskType taskType;
+
+    @ManyToOne
+    public Screenplay screenplay;
 
     @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<WorkerTaskExecutionStatus> workerStatuses;
@@ -114,5 +119,10 @@ public class Task {
         TaskExecutionStatus taskExecutionStatus = new TaskExecutionStatus();
         taskExecutionStatus.description = "Статус не задан";
         return taskExecutionStatus;
+    }
+
+    @PreRemove
+    private void removeFromTask() {
+        screenplay.tasks.remove(this);
     }
 }

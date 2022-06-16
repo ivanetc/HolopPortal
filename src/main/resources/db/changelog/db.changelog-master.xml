@@ -7,7 +7,7 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
                    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
-    <changeSet id="1" author="admin">
+    <changeSet id="1" author="admin" labels="user-tables">
         <createTable tableName="user_roles">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="user_role_id_pk" />
@@ -33,7 +33,22 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="admin">
+    <changeSet id="2" author="admin" labels="tasks-screenplay-tables">
+        <createTable tableName="screenplays">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="screenplay_id_pk" />
+            </column>
+            <column name="code" type="varchar"/>
+            <column name="name" type="varchar"/>
+            <column name="content" type="varchar"/>
+            <column name="author_user_id" type="int">
+                <constraints foreignKeyName="screenplays_author_user_id_fk"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+
         <createTable tableName="task_types">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="task_type_id_pk" />
@@ -48,16 +63,25 @@
             <column name="name" type="varchar"/>
             <column name="code" type="varchar"/>
             <column name="description" type="varchar"/>
+            <column name="love_impact_value" type="int"/>
+            <column name="honest_impact_value" type="int"/>
+            <column name="kindness_impact_value" type="int"/>
             <column name="task_type_id" type="int">
                 <constraints foreignKeyName="taskTypes_type_id_fk"
                              referencedTableName="task_types"
                              referencedColumnNames="id"
                 />
             </column>
+            <column name="screenplay_id" type="int">
+                <constraints foreignKeyName="tasks_screenplay_id_fk"
+                             referencedTableName="screenplays"
+                             referencedColumnNames="id"
+                />
+            </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="admin">
+    <changeSet id="3" author="admin" labels="tasks-statuses-tables">
         <createTable tableName="task_execution_statuses">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="TaskExecutionStatus_id_pk" />
@@ -92,7 +116,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="4" author="admin">
+    <changeSet id="4" author="admin" labels="user-testdata">
         <insert tableName="user_roles">
             <column name="id" value="0"/>
             <column name="description" value="Сотрудник"/>
@@ -142,7 +166,16 @@
         </insert>
 
     </changeSet>
-    <changeSet id="5" author="admin">
+
+    <changeSet id="5" author="admin" labels="tasks-screenplay-testdata">
+
+        <insert tableName="screenplays">
+            <column name="id" value="0"/>
+            <column name="name" value="Сцена приветствия"/>
+            <column name="code" value="welcome-1"/>
+            <column name="content" value="Текст сценария. Может быть очень длинным"/>
+            <column name="author_user_id" value="0"/>
+        </insert>
 
         <insert tableName="task_types">
             <column name="id" value="0"/>
@@ -165,6 +198,10 @@
             <column name="code" value="welcome-1"/>
             <column name="description" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
             <column name="task_type_id" value="0"/>
+            <column name="honest_impact_value" value="2"/>
+            <column name="love_impact_value" value="3"/>
+            <column name="kindness_impact_value" value="1"/>
+            <column name="screenplay_id" value="0"/>
         </insert>
 
         <insert tableName="tasks">
@@ -173,6 +210,10 @@
             <column name="code" value="horror-1"/>
             <column name="description" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
             <column name="task_type_id" value="0"/>
+            <column name="honest_impact_value" value="2"/>
+            <column name="love_impact_value" value="3"/>
+            <column name="kindness_impact_value" value="1"/>
+            <column name="screenplay_id" value="0"/>
         </insert>
 
         <insert tableName="tasks">
@@ -181,6 +222,10 @@
             <column name="code" value="decor-1"/>
             <column name="description" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
             <column name="task_type_id" value="2"/>
+            <column name="honest_impact_value" value="2"/>
+            <column name="love_impact_value" value="3"/>
+            <column name="kindness_impact_value" value="1"/>
+            <column name="screenplay_id" value="0"/>
         </insert>
 
         <insert tableName="tasks">
@@ -189,10 +234,14 @@
             <column name="code" value="decor-2"/>
             <column name="description" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
             <column name="task_type_id" value="2"/>
+            <column name="honest_impact_value" value="2"/>
+            <column name="love_impact_value" value="3"/>
+            <column name="kindness_impact_value" value="1"/>
+            <column name="screenplay_id" value="0"/>
         </insert>
 
     </changeSet>
-    <changeSet id="6" author="admin">
+    <changeSet id="6" author="admin" labels="tasks-statuses-testdata">
         <insert tableName="task_execution_statuses">
             <column name="id" value="0"/>
             <column name="description" value="Ожидает начала"/>
@@ -224,7 +273,7 @@
             <column name="code" value="Canceled"/>
         </insert>
     </changeSet>
-    <changeSet id="7" author="admin">
+    <changeSet id="7" author="admin" labels="tasks-statuses-testdata">
         <insert tableName="worker_task_execution_statuses">
             <column name="worker_id" value="1"/>
             <column name="task_execution_status_id" value="0"/>
@@ -265,12 +314,5 @@
             <column name="task_execution_status_id" value="0"/>
             <column name="task_id" value="3"/>
         </insert>
-    </changeSet>
-    <changeSet id="7" author="admin2">
-        <addColumn tableName="tasks">
-            <column name="love_impact_value" type="int"/>
-            <column name="honest_impact_value" type="int"/>
-            <column name="kindness_impact_value" type="int"/>
-        </addColumn>
     </changeSet>
 </databaseChangeLog>

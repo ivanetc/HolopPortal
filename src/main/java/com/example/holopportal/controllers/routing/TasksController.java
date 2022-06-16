@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import com.example.holopportal.screenplay.services.ScreenPlayService;
+import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
@@ -33,14 +33,14 @@ public class TasksController {
     TaskTypeService taskTypeService;
 
     @Inject
-    ScreenPlayService screenPlayService;
+    ScreenplayService screenPlayService;
 
     @GetMapping("/new")
-    public String greeting(Model model) {
+    public String newTask(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
-        model.addAttribute("screenPlayElements", screenPlayService.getAllScreenPlays());
+        model.addAttribute("screenPlayElements", screenPlayService.getAllScreenplays());
         model.addAttribute("newTaskForm", new NewTaskForm());
         return "newtask";
     }
