@@ -1,5 +1,6 @@
 package com.example.holopportal.screenplay.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,5 +30,7 @@ public class Screenplay {
     @OneToMany(mappedBy = "screenplay", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Task> tasks;
 
-    public Screenplay() {}
+    public Screenplay() {
+        tasks = new HashSet<>();
+    }
 }
