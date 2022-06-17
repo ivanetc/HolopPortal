@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Holop Portal</title>
+    <title>Новый сценарий</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script type="text/javascript" src="/js/greeting.js"></script>
@@ -12,11 +12,20 @@
 
 <div id="main_div">
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-    <div>
-        <h1>Holop greeting page</h1>
-        <p th:text="'Hello, ' + ${currentUser.firstName} + '!'" />
+    <div id="content_container">
+        <div id="NewTaskContainer">
+            <p style="font-weight: bold">Новый сценарий</p>
+            <div>
+                <label>Имя</label>
+                <input type="text" class="codeAndNameTask"></input>
+                <label>Код сценария</label>
+                <input type="text" class="codeAndNameTask"></input>
+            </div>
+            <textarea class="textAreaStyle"></textarea>
+            <a class="AcceptButton">Ok</a>
+            <a class="RejectButton">Cancel</a>
+        </div>
     </div>
-
 </div>
 
 </body>
