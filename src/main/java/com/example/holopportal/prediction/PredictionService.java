@@ -25,6 +25,7 @@ public class PredictionService {
         int currentLoveValue = 0;
         int currentKindnessValue = 0;
         int currentHonestyValue = 0;
+        int successPercentValue = 0;
 
         for (Task task : tasksService.getAllTasks()) {
             if (task.getCommonStatus().id == TaskExecutionStatus.DefaultStatusIds.Successful.getId()) {
@@ -34,7 +35,8 @@ public class PredictionService {
             }
         }
         // здесь скалькулировать процент выполнения
+        successPercentValue = (currentLoveValue + currentKindnessValue + currentHonestyValue) / (loveTarget + kindnessTarget + honestyTarget);
         return new PredictionView(currentLoveValue, currentKindnessValue, currentHonestyValue, loveTarget,
-                kindnessTarget, honestyTarget);
+                kindnessTarget, honestyTarget, successPercentValue);
     }
 }
