@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Holop Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script type="text/javascript" src="/js/greeting.js"></script>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div>
+        <h1>Holop greeting page</h1>
+        <p th:text="'Hello, ' + ${currentUser.firstName} + '!'" />
+    </div>
+
+</div>
+
+</body>
+</html>
