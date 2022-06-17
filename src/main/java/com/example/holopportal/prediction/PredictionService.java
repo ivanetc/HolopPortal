@@ -6,6 +6,8 @@ import com.example.holopportal.tasks.services.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static java.lang.Math.round;
+
 @Component
 public class PredictionService {
     TasksService tasksService;
@@ -35,8 +37,13 @@ public class PredictionService {
             }
         }
         // здесь скалькулировать процент выполнения
-        successPercentValue = (currentLoveValue + currentKindnessValue + currentHonestyValue) / (loveTarget + kindnessTarget + honestyTarget);
+        double successPercent = ((double) currentHonestyValue + currentKindnessValue + currentLoveValue) / (loveTarget + kindnessTarget + honestyTarget);
+
         return new PredictionView(currentLoveValue, currentKindnessValue, currentHonestyValue, loveTarget,
-                kindnessTarget, honestyTarget, successPercentValue);
+                kindnessTarget, honestyTarget, round(successPercent));
+    }
+
+    private static int round(double value) {
+        return  (int) Math.round(value * 10);
     }
 }

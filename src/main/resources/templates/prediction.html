@@ -14,11 +14,19 @@
     <!--/*@thymesVar id="predictionInfo" type="com.example.holopportal.prediction.PredictionView"*/-->
 
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-    <p th:text="${predictionInfo.successPercent}"/>
     <div>
         <div th:switch="${predictionInfo.successPercent}">
             <img th:case="0" class="predictImage" src="/images/prediction images/prediction_img_step_1.png"/>
-            <img th:case="50" class="predictImage" src="/images/prediction images/prediction_img_step_7.png"/></div>
+            <img th:case="1" class="predictImage" src="/images/prediction images/prediction_img_step_1.png"/>
+            <img th:case="2" class="predictImage" src="/images/prediction images/prediction_img_step_2.png"/>
+            <img th:case="3" class="predictImage" src="/images/prediction images/prediction_img_step_3.png"/>
+            <img th:case="4" class="predictImage" src="/images/prediction images/prediction_img_step_4.png"/>
+            <img th:case="5" class="predictImage" src="/images/prediction images/prediction_img_step_5.png"/>
+            <img th:case="6" class="predictImage" src="/images/prediction images/prediction_img_step_6.png"/>
+            <img th:case="7" class="predictImage" src="/images/prediction images/prediction_img_step_7.png"/>
+            <img th:case="8" class="predictImage" src="/images/prediction images/prediction_img_step_8.png"/>
+            <img th:case="9" class="predictImage" src="/images/prediction images/prediction_img_step_9.png"/>
+            <img th:case="10" class="predictImage" src="/images/prediction images/prediction_img_step_10.png"/></div>
         <div class="qualitiesNumbers">
             <div class="qualitiesBox">
                 <p th:text="${predictionInfo.kindness_current} + ' / ' + ${predictionInfo.kindness_target}"></p>

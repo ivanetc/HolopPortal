@@ -3,10 +3,10 @@ package com.example.holopportal.prediction;
 class PredictionView {
     private final int love_current;
     private final int kindness_current;
-    private final int  honesty_current;
+    private final int honesty_current;
     private final int love_target;
     private final int kindness_target;
-    private final int  honesty_target;
+    private final int honesty_target;
     private final int successPercent;
 
     public PredictionView(int love_current, int kindness_current, int honesty_current, int love_target,
