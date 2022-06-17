@@ -1,4 +1,4 @@
-package com.example.holopportal.controllers.routing;
+package com.example.holopportal.controllers.rest;
 
 import java.util.Optional;
 
@@ -6,38 +6,39 @@ import javax.inject.Inject;
 
 import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.screenplay.views.ScreenplayForm;
+import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/screenplay")
-public class ScreenPlayController {
+@RequestMapping("/api/screenplay")
+
+public class ScreenplayRestController {
+
+    @Inject
+    ScreenplayService screenplayService;
 
     @Inject
     UserService userService;
-    @Inject
-    ScreenplayService screenPlayService;
 
-    @GetMapping()
-    public String getScreenplays(Model model) {
+    @PostMapping()
+    public RedirectView createTask(Model model, @ModelAttribute ScreenplayForm screenplayForm) {
         User currentUser = getCurrentUser();
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("screenplays", screenPlayService.getAllScreenplays());
+        screenplayService.createNewScreenplay(screenplayForm, currentUser);
 
-        return "screenplays";
-    }
-
-    @GetMapping("/new")
-    public String greeting(Model model) {
-        model.addAttribute("currentUser", userService.getCurrentUser().get());
-        model.addAttribute("newScreenplayForm", new ScreenplayForm());
-        return "newscreenplay";
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+        redirectView.setUrl("/screenplay");
+        return redirectView;
     }
 
     private User getCurrentUser() {
