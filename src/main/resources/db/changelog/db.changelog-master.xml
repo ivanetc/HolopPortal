@@ -191,7 +191,42 @@
             <column name="id" value="2"/>
             <column name="description" value="Задание на декорации"/>
         </insert>
+    </changeSet>
 
+    <changeSet id="6" author="admin" labels="tasks-statuses-testdata">
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="0"/>
+            <column name="description" value="Ожидает начала"/>
+            <column name="code" value="WaitingForStart"/>
+        </insert>
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="1"/>
+            <column name="description" value="Ожидает подтверждения"/>
+            <column name="code" value="WaitingForConfirmation"/>
+        </insert>
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="2"/>
+            <column name="description" value="Выполняется"/>
+            <column name="code" value="InWork"/>
+        </insert>
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="3"/>
+            <column name="description" value="Успешно завершено"/>
+            <column name="code" value="Successful"/>
+        </insert>
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="4"/>
+            <column name="description" value="Неуспешно завершено"/>
+            <column name="code" value="Failed"/>
+        </insert>
+        <insert tableName="task_execution_statuses">
+            <column name="id" value="5"/>
+            <column name="description" value="Отменена режиссером"/>
+            <column name="code" value="Canceled"/>
+        </insert>
+    </changeSet>
+<!--
+    <changeSet id="7" author="khilik">
         <insert tableName="tasks">
             <column name="id" value="0"/>
             <column name="name" value="Задание на сцену приветствия"/>
@@ -239,41 +274,9 @@
             <column name="kindness_impact_value" value="1"/>
             <column name="screenplay_id" value="0"/>
         </insert>
+    </changeSet>
 
-    </changeSet>
-    <changeSet id="6" author="admin" labels="tasks-statuses-testdata">
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="0"/>
-            <column name="description" value="Ожидает начала"/>
-            <column name="code" value="WaitingForStart"/>
-        </insert>
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="1"/>
-            <column name="description" value="Ожидает подтверждения"/>
-            <column name="code" value="WaitingForConfirmation"/>
-        </insert>
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="2"/>
-            <column name="description" value="Выполняется"/>
-            <column name="code" value="InWork"/>
-        </insert>
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="3"/>
-            <column name="description" value="Успешно завершено"/>
-            <column name="code" value="Successful"/>
-        </insert>
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="4"/>
-            <column name="description" value="Неуспешно завершено"/>
-            <column name="code" value="Failed"/>
-        </insert>
-        <insert tableName="task_execution_statuses">
-            <column name="id" value="5"/>
-            <column name="description" value="Отменена режиссером"/>
-            <column name="code" value="Canceled"/>
-        </insert>
-    </changeSet>
-    <changeSet id="7" author="admin" labels="tasks-statuses-testdata">
+    <changeSet id="8" author="admin" labels="tasks-statuses-testdata">
         <insert tableName="worker_task_execution_statuses">
             <column name="worker_id" value="1"/>
             <column name="task_execution_status_id" value="0"/>
@@ -315,4 +318,5 @@
             <column name="task_id" value="3"/>
         </insert>
     </changeSet>
+-->
 </databaseChangeLog>

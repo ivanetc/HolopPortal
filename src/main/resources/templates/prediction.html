@@ -11,11 +11,23 @@
 <div th:replace="fragments/header :: header">&nbsp;</div>
 
 <div id="main_div">
+    <!--/*@thymesVar id="predictionInfo" type="com.example.holopportal.prediction.PredictionView"*/-->
+
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div>
-        <div><img class="predictImage" src="/images/predict_1.png"></img></div>
+        <div th:switch="${predictionInfo.successPercent}">
+            <img th:case="0" class="predictImage" src="/images/prediction images/prediction_img_step_1.png"/>
+            <img th:case="1" class="predictImage" src="/images/prediction images/prediction_img_step_1.png"/>
+            <img th:case="2" class="predictImage" src="/images/prediction images/prediction_img_step_2.png"/>
+            <img th:case="3" class="predictImage" src="/images/prediction images/prediction_img_step_3.png"/>
+            <img th:case="4" class="predictImage" src="/images/prediction images/prediction_img_step_4.png"/>
+            <img th:case="5" class="predictImage" src="/images/prediction images/prediction_img_step_5.png"/>
+            <img th:case="6" class="predictImage" src="/images/prediction images/prediction_img_step_6.png"/>
+            <img th:case="7" class="predictImage" src="/images/prediction images/prediction_img_step_7.png"/>
+            <img th:case="8" class="predictImage" src="/images/prediction images/prediction_img_step_8.png"/>
+            <img th:case="9" class="predictImage" src="/images/prediction images/prediction_img_step_9.png"/>
+            <img th:case="10" class="predictImage" src="/images/prediction images/prediction_img_step_10.png"/></div>
         <div class="qualitiesNumbers">
-            <!--/*@thymesVar id="predictionInfo" type="com.example.holopportal.prediction.PredictionView"*/-->
             <div class="qualitiesBox">
                 <p th:text="${predictionInfo.kindness_current} + ' / ' + ${predictionInfo.kindness_target}"></p>
                 <p class="qualitiesLabel">Доброта</p>
@@ -30,7 +42,8 @@
             </div>
         </div>
         <p class="infoPredictionText">До полного перевоспитания осталось 22 дня</p>
-</div>
+    </div>
+</img>
 
 </body>
 </html>
