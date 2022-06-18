@@ -25,9 +25,10 @@ public class ScreenplayService {
     public Screenplay createNewScreenplay(ScreenplayForm screenplayForm, User currentUser) {
         Screenplay newScreenplay = new Screenplay();
 
-        newScreenplay.code = screenplayForm.code;
-        newScreenplay.content = screenplayForm.content;
-        newScreenplay.name = screenplayForm.name;
+        newScreenplay.code = screenplayForm.getCode();
+        newScreenplay.content = screenplayForm.getContent();
+        newScreenplay.name = screenplayForm.getName();
+
 
         return screenplayRepo.save(newScreenplay);
     }
