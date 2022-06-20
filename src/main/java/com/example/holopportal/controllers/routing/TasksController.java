@@ -40,7 +40,7 @@ public class TasksController {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
-        model.addAttribute("screenPlayElements", screenPlayService.getAllScreenplays());
+        model.addAttribute("allSreenplays", screenPlayService.getAllScreenplays());
         model.addAttribute("newTaskForm", new NewTaskForm());
         return "newtask";
     }

@@ -4,10 +4,9 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.example.holopportal.screenplay.entities.Screenplay;
 import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.screenplay.views.ScreenplayForm;
-import com.example.holopportal.tasks.entities.Task;
-import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -33,11 +32,16 @@ public class ScreenplayRestController {
     @PostMapping()
     public RedirectView createTask(Model model, @ModelAttribute ScreenplayForm screenplayForm) {
         User currentUser = getCurrentUser();
-        screenplayService.createNewScreenplay(screenplayForm, currentUser);
+        Optional<Screenplay> newScreenplay = screenplayService.createNewScreenplay(screenplayForm, currentUser);
 
         RedirectView redirectView = new RedirectView();
         redirectView.setContextRelative(true);
-        redirectView.setUrl("/screenplay");
+
+        if (newScreenplay.isPresent()) {
+            redirectView.setUrl("/screenplay/" + newScreenplay.get().id + "?isNew=true" );
+        } else {
+            redirectView.setUrl("/screenplay");
+        }
         return redirectView;
     }
 

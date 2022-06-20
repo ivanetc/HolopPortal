@@ -1,5 +1,6 @@
 package com.example.holopportal.tasks.views;
 
+import com.example.holopportal.screenplay.entities.Screenplay;
 import com.example.holopportal.tasks.entities.TaskType;
 import com.example.holopportal.user.entities.User;
 
@@ -11,6 +12,7 @@ public class NewTaskForm {
     private String description;
     private TaskType taskType;
     private List<User> workers;
+    private Screenplay screenplay;
     private int loveImpactValue;
     private int honestImpactValue;
     private int kindnessImpactValue;
@@ -77,5 +79,13 @@ public class NewTaskForm {
 
     public void setKindnessImpactValue(int kindnessImpactValue) {
         this.kindnessImpactValue = kindnessImpactValue;
+    }
+
+    public Screenplay getScreenplay() {
+        return screenplay;
+    }
+
+    public void setScreenplay(Screenplay screenplay) {
+        this.screenplay = screenplay;
     }
 }

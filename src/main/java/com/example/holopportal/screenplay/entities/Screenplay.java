@@ -10,10 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.user.entities.User;
 
 @Entity
 @Table(schema = "public", name = "screenplays")
@@ -27,8 +30,16 @@ public class Screenplay {
     public String name;
     public String content;
 
+    @OneToOne
+    @JoinColumn(name = "author_user_id")
+    public User author;
+
     @OneToMany(mappedBy = "screenplay", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Task> tasks;
+
+    public User getAuthor() {
+        return author;
+    }
 
     public Screenplay() {
         tasks = new HashSet<>();

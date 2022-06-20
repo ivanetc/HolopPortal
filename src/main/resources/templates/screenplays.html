@@ -1,11 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Holop Portal. Tasks</title>
+    <title>Holop Portal. Screenplays</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="/js/tasks.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 
 </head>
 <body>
@@ -15,15 +22,7 @@
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div id="content_container">
         <th:block th:each="screenplay : ${screenplays}">
-            <div>
-                <!--/*@thymesVar id="screenplay" type="com.example.holopportal.screenplay.entities.Screenplay"*/-->
-                <h2>Код</h2>
-                <p th:text="${screenplay.code}"></p>
-                <h2>Название</h2>
-                <p th:text="${screenplay.name}"></p>
-                <h2>Содержание сценария:</h2>
-                <p th:text="${screenplay.content}"></p>
-            </div>
+            <div th:replace="fragments/singleScreenplay :: singleScreenplay (screenplay=${screenplay})"></div>
         </th:block>
     </div>
 </div>

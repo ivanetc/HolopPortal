@@ -22,18 +22,22 @@ public class ScreenplayService {
         this.screenplayRepo = screenPlayRepo;
     }
 
-    public Screenplay createNewScreenplay(ScreenplayForm screenplayForm, User currentUser) {
+    public Optional<Screenplay> createNewScreenplay(ScreenplayForm screenplayForm, User currentUser) {
         Screenplay newScreenplay = new Screenplay();
 
         newScreenplay.code = screenplayForm.getCode();
         newScreenplay.content = screenplayForm.getContent();
         newScreenplay.name = screenplayForm.getName();
+        newScreenplay.author = currentUser;
 
-
-        return screenplayRepo.save(newScreenplay);
+        return Optional.of(screenplayRepo.save(newScreenplay));
     }
 
     public List<Screenplay> getAllScreenplays() {
         return screenplayRepo.findAll();
+    }
+
+    public Optional<Screenplay> getScreenplayById(int id) {
+        return screenplayRepo.findById(id);
     }
 }

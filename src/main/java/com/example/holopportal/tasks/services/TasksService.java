@@ -112,6 +112,7 @@ public class TasksService {
         newTask.kindnessImpactValue = newTaskForm.getKindnessImpactValue();
         newTask.loveImpactValue = newTaskForm.getLoveImpactValue();
         newTask.honestImpactValue = newTaskForm.getHonestImpactValue();
+        newTask.screenplay = newTaskForm.getScreenplay();
 
         Task savedTask = taskRepo.save(newTask);
 

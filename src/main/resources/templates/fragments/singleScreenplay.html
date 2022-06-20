@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Holop Portal. Screenplays</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/tasks.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
+            Сценарий успешно создан
+        </div>
+        <div th:fragment="singleScreenplay(screenplay)">
+            <div class="card hoverable holop-card">
+                <div class="card-content">
+                    <!--/*@thymesVar id="screenplay" type="com.example.holopportal.screenplay.entities.Screenplay"*/-->
+
+                    <div class="row">
+                        <div class="col s9">
+                            <p th:text="${screenplay.code}"></p>
+                            <h4 th:text="${screenplay.name}"></h4>
+                        </div>
+                        <div class="col s3">
+                            <p>Автор</p>
+                            <h4 th:text="${screenplay.author.lastName} + ' ' + ${screenplay.author.firstName}"></h4>
+                        </div>
+
+                        <div class="col s12">
+                            <h4>Содержание:</h4>
+                            <p th:text="${screenplay.content}"></p>
+                            <h4>Связанные задачи:</h4>
+                            <div class="collection">
+                                <th:block th:each="task : ${screenplay.tasks}">
+                                    <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
+                                    <a class="collection-item orange-text text-darken-4" th:href="'/tasks/' + ${task.id}" th:text="${task.code} + '-' + ${task.name}"></a>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+</body>
+</html>
