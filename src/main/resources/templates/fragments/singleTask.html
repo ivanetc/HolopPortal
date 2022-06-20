@@ -30,6 +30,8 @@
                 <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
                 <a th:text="${status.worker.lastName} + ' ' + ${status.worker.firstName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
             </th:block>
+            <h3>Связанный сценарий</h3>
+            <a th:text="${task.screenplay.code} + ' - ' + ${task.screenplay.name}" th:href="@{/screenplay/{id}(id=${task.screenplay.id})}"></a>
             <h3>Влияние на перевоспитание</h3>
             <div class="qualitiesNumbers">
                 <div class="qualitiesBox">

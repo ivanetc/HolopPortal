@@ -30,6 +30,13 @@
             <option th:value="${{type}}" th:text="${type.description}"></option>
           </th:block>
         </select>
+        <p class="personalAndTypeText">Связанный сценарий:</p>
+        <select th:field="*{screenplay}" class="widthMenu">
+          <th:block th:each="screenplay : ${allSreenplays}">
+            <!--/*@thymesVar id="screenplay" type="com.example.holopportal.screenplay.entities.Screenplay"*/-->
+            <option th:value="${{screenplay}}" th:text="${screenplay.code} + ' - ' + ${screenplay.name}"></option>
+          </th:block>
+        </select>
         <div>
           <label>Имя</label>
           <input th:field="*{name}" type="text" class="codeAndNameTask"></input>

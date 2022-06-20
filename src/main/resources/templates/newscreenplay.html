@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Новый сценарий</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script type="text/javascript" src="/js/greeting.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <div id="NewTaskContainer ">
+            <!--/*@thymesVar id="screenplayForm" type="com.example.holopportal.screenplay.views.ScreenplayForm"*/-->
+            <form th:object="${newScreenplayForm}" th:action="@{/api/screenplay}" method="post">
+                <p style="font-weight: bold">Новый сценарий</p>
+                <div>
+                    <label>Имя</label>
+                    <input th:field="*{name}" type="text" class="codeAndNameTask"></input>
+                    <label>Код сценария</label>
+                    <input th:field="*{code}" type="text" class="codeAndNameTask"></input>
+                </div>
+                <textarea  th:field="*{content}" class="textAreaStyle"></textarea>
+    <!--       here we need instead <a ... <input type="submit"  -->
+                <div class="ApplyButtonContainer">
+                    <input type="submit" class="AceptButton">
+                </div>
+            </form>
+        </div>
+</div>
+
+</body>
+</html>

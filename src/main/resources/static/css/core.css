@@ -198,3 +198,21 @@ a.AceptButton:hover{
 .singInButton:hover{
     background: #6ccef8;
 }
+
+
+/*
+Screenplay page
+*/
+
+.connected-tasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.holop-card {
+    margin: 15px !important;
+}
+
+h4 {
+    font-size: 2rem !important;
+}
