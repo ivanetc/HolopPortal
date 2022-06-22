@@ -1,21 +1,17 @@
 package com.example.holopportal.user.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import com.example.holopportal.user.entities.User;
-import com.example.holopportal.user.entities.UserRole;
 import com.example.holopportal.user.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserService implements UserDetailsService {
@@ -36,6 +32,7 @@ public class UserService implements UserDetailsService {
             if (password == null || password.isEmpty()) {
                 user.setPassword(bCryptPasswordEncoder.encode("password"));
                 userRepo.save(user);
+
             }
         }
     }
@@ -65,5 +62,15 @@ public class UserService implements UserDetailsService {
         }
 
         return Optional.empty();
+    }
+
+    public Optional<User> findByTelegramLogin(String telegramLogin) {
+        return userRepo.findByTelegramLogin(telegramLogin);
+    }
+
+    public void setUserChatId(int userId, String chatId) {
+        User user = userRepo.findById(userId);
+        user.setChatId(chatId);
+        userRepo.save(user);
     }
 }
