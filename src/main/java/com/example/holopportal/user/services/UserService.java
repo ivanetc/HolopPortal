@@ -87,4 +87,14 @@ public class UserService implements UserDetailsService {
 
         return Optional.empty();
     }
+
+    public Optional<User> findByTelegramLogin(String telegramLogin) {
+        return userRepo.findByTelegramLogin(telegramLogin);
+    }
+
+    public void setUserChatId(int userId, String chatId) {
+        User user = userRepo.findById(userId);
+        user.setChatId(chatId);
+        userRepo.save(user);
+    }
 }
