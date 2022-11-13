@@ -31,7 +31,7 @@
     margin: 70px;
     padding: 5px;
 }
-#NewTaskContainer{
+.newTaskContainer{
     border: 2px double black;
     background: #ffffff;
     padding: 10px;
@@ -219,4 +219,82 @@ Screenplay page
 
 h4 {
     font-size: 2rem !important;
+}
+
+.mainSingInText{
+    font-size: 3.6rem;
+}
+
+.screenplayContainer{
+    background-color: #ffffff;
+    width: auto;
+    padding: 20px 30px;
+    margin: -20px 40px;
+    position: absolute;
+    border-radius: 10px;
+    border: 2px solid #dddddd;
+}
+
+.optionsTextEditor{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.buttonTextEditor{
+    height: 28px;
+    width: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 3px;
+    border: none;
+    background-color: white;
+    outline: none;
+    color: #020929;
+}
+
+#text-input{
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid #dddddd;
+    padding: 20px;
+    height: 50vh;
+}
+
+.selectTextEditorOption{
+    padding: 7px;
+    border: 1px solid #020929;
+    border-radius:  3px;
+}
+
+.input-wrapper{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+input[type="color"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 40px;
+    height: 28px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch{
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+
+input[type="color"]::-moz-color-swatch{
+    border-radius: 15px;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #020929;
+}
+
+.active{
+    background-color: #e0e9ff;
 }
