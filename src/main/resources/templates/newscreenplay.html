@@ -1,10 +1,16 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Новый сценарий</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script type="text/javascript" src="/js/greeting.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
@@ -14,7 +20,7 @@
     <div id="content_container">
         <div id="NewTaskContainer ">
             <!--/*@thymesVar id="screenplayForm" type="com.example.holopportal.screenplay.views.ScreenplayForm"*/-->
-            <form th:object="${newScreenplayForm}" th:action="@{/api/screenplay}" method="post">
+            <form th:object="${newScreenplayForm}" th:action="@{/api/screenplay}" method="post" style="margin: 40px">
                 <p style="font-weight: bold">Новый сценарий</p>
                 <div>
                     <label>Имя</label>
@@ -22,13 +28,10 @@
                     <label>Код сценария</label>
                     <input th:field="*{code}" type="text" class="codeAndNameTask"></input>
                 </div>
-                <textarea  th:field="*{content}" class="textAreaStyle"></textarea>
-    <!--       here we need instead <a ... <input type="submit"  -->
-                <div class="ApplyButtonContainer">
-                    <input type="submit" class="AceptButton">
-                </div>
+                <div th:replace="fragments/textEditor"></div>
             </form>
         </div>
+    </div>
 </div>
 
 </body>
