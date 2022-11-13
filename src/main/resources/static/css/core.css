@@ -174,7 +174,7 @@ a.AceptButton:hover{
 }
 
 .loginFrame{
-    margin: 100px 520px;
+    margin: 20px;
     border-radius: 20px;
 }
 
@@ -184,7 +184,7 @@ a.AceptButton:hover{
 
 .singInButton{
     background: #4db5e1;
-    margin: 30px 40px;
+    margin: 30px 120px;
     border: none;
     font-weight: bold;
     text-decoration: none;
@@ -193,6 +193,10 @@ a.AceptButton:hover{
     color: black;
     font-size: 16px;
     border-radius: 30px;
+}
+
+.errorInvalidUsernameOrPassword{
+    color: red;
 }
 
 .singInButton:hover{
