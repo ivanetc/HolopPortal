@@ -5,31 +5,39 @@
   <title>Новая задача</title>
   <link rel="stylesheet" type="text/css" href="/css/core.css">
   <script type="text/javascript" src="/js/greeting.js"></script>
-</head>
-<body>
-<div th:replace="fragments/header :: header">&nbsp;</div>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-<div id="main_div">
-  <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
-  <div id="content_container">
-    <div id="NewTaskContainer">
-      <p style="font-weight: bold">Новая задача</p>
-      <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ </head>
+ <body>
+ <div th:replace="fragments/header :: header">&nbsp;</div>
+
+ <div id="main_div">
+   <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+   <div id="content_container">
+     <div class="newTaskContainer">
+       <p style="font-weight: bold">Новая задача</p>
+       <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
       <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">
         <p class="personalAndTypeText">Персонал:</p>
         <select th:field="*{workers}" multiple class="widthMenu">
-          <th:block th:each="worker : ${all_workers}">
+          <tr th:each="worker : ${all_workers}">
             <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
             <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
-          </th:block>
+          </tr>
         </select>
         <p class="personalAndTypeText">Тип задачи:</p>
-        <select th:field="*{taskType}" class="widthMenu">
-          <th:block th:each="type : ${taskTypes}">
-            <!--/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/-->
-            <option th:value="${{type}}" th:text="${type.description}"></option>
-          </th:block>
-        </select>
+        <div class="input-field col s12">
+          <select th:field="*{taskType}" class="widthMenu">
+            <tr th:block th:each="type : ${taskTypes}">
+              <!--/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/-->
+              <option th:value="${{type}}" th:text="${type.description}"></option>
+            </th:block>
+            </tr>
+          </select>
+        </div>
         <p class="personalAndTypeText">Связанный сценарий:</p>
         <select th:field="*{screenplay}" class="widthMenu">
           <th:block th:each="screenplay : ${allSreenplays}">

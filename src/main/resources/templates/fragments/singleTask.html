@@ -6,6 +6,11 @@
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="/js/tasks.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
@@ -13,53 +18,69 @@
 <div id="main_div">
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div id="content_container">
-        <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
-            Задание успешно создано
-        </div>
-        <div id="singleTaskContainer" th:fragment="singleTask(task)">
-            <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
-            <a th:href="@{/tasks/{id}(id=${task.id})}"><h2 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h2></a>
-            <h3>Тип задания:</h3>
-            <p th:text="${task.taskType.description}"></p>
-            <h3>Статус:</h3>
-            <p th:text="${task.getCommonStatus().description}"></p>
-            <h3>Описание:</h3>
-            <p th:text="${task.description}"></p>
-            <h3>Задействованный персонал</h3>
-            <th:block th:each="status : ${task.workerStatuses}">
-                <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
-                <a th:text="${status.worker.lastName} + ' ' + ${status.worker.firstName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
-            </th:block>
-            <h3>Связанный сценарий</h3>
-            <a th:text="${task.screenplay.code} + ' - ' + ${task.screenplay.name}" th:href="@{/screenplay/{id}(id=${task.screenplay.id})}"></a>
-            <h3>Влияние на перевоспитание</h3>
-            <div class="qualitiesNumbers">
-                <div class="qualitiesBox">
-                    <p th:text="${task.kindnessImpactValue}"></p>
-                    <p class="qualitiesLabel">Доброта</p>
-                </div>
-                <div class="qualitiesBox">
-                    <p th:text="${task.loveImpactValue}"></p>
-                    <p class="qualitiesLabel">Любовь</p>
-                </div>
-                <div class="qualitiesBox">
-                    <p th:text="${task.honestImpactValue}"></p>
-                    <p class="qualitiesLabel">Честность</p>
-                </div>
+            <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
+                Задание успешно создано
             </div>
-
-            <div sec:authorize="hasAuthority('DIRECTOR')">
-                <button type="button" disabled th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
-                <button type="button" th:disabled="${(task.getCommonStatus().id == 3 || task.getCommonStatus().id == 4 || task.getCommonStatus().id == 5)}" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
-            </div>
-            <div sec:authorize="hasAuthority('WORKER')">
-                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 1)}" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
-                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
-                <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
+            <div th:fragment="singleTask(task)">
+                <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
+                <div class="card hoverable holop-card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s9">
+                                    <a th:href="@{/tasks/{id}(id=${task.id})}"><h4 th:text="'Задание ' + ${task.code} + ' - ' + ${task.name}"></h4></a>
+                                    <h5>Тип задания:</h5>
+                                    <p th:text="${task.taskType.description}"></p>
+                                    <!--<h4>Статус:</h4> -->
+                            </div>
+                            <div class="col s3">
+                                <p th:text="${task.getCommonStatus().description}"></p>
+                            </div>
+                            <br>
+                            <div class="col s9">
+                                <h5>Связанный сценарий:</h5>
+                                <a th:text="${task.screenplay.code} + ' - ' + ${task.screenplay.name}" th:href="@{/screenplay/{id}(id=${task.screenplay.id})}"></a>
+                                <h4>Описание:</h4>
+                                <p th:text="${task.description}"></p>
+                            </div>
+                            <h5>Персонал:</h5>
+                            <th:block th:each="status : ${task.workerStatuses}">
+                                <!--/*@thymesVar id="status" type="com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus"*/-->
+                                <a th:text="${status.worker.lastName} + ' ' + ${status.worker.firstName} + ' (' + ${status.taskExecutionStatus.description} + ')'"></a><br/>
+                            </th:block>
+                            <div class="col s12">
+                                <div class="card-content grey lighten-3">
+                                    <div class="qualitiesNumbers">
+                                        <div class="qualitiesBox">
+                                            <p th:text="${task.kindnessImpactValue}"></p>
+                                            <p class="qualitiesLabel">Доброта</p>
+                                        </div>
+                                        <div class="qualitiesBox">
+                                            <p th:text="${task.loveImpactValue}"></p>
+                                            <p class="qualitiesLabel">Любовь</p>
+                                        </div>
+                                        <div class="qualitiesBox">
+                                            <p th:text="${task.honestImpactValue}"></p>
+                                            <p class="qualitiesLabel">Честность</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div sec:authorize="hasAuthority('DIRECTOR')">
+                                        <button type="button" disabled th:onclick="|setTaskStatus('${task.id}', 1)|">Отправить задачу</button>
+                                        <button type="button" th:disabled="${(task.getCommonStatus().id == 3 || task.getCommonStatus().id == 4 || task.getCommonStatus().id == 5)}" th:onclick="|setTaskStatus('${task.id}', 5)|">Отменить задачу</button>
+                                    </div>
+                                    <div sec:authorize="hasAuthority('WORKER')">
+                                        <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 1)}" th:onclick="|setTaskStatus('${task.id}', 2)|">Начать выполнение задания</button>
+                                        <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 3)|">Завершить задание успешно</button>
+                                        <button type="button" th:disabled="${!(task.getStatusForUser(currentUser).id == 2)}" th:onclick="|setTaskStatus('${task.id}', 4)|">Завершить задание неуспешно</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 </body>
 </html>
