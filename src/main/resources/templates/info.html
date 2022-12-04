@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: common_head">
+    <title>Holop Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script type="text/javascript" src="/js/greeting.js"></script>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <!--/*@thymesVar id="NewProjectForm" type="com.example.holopportal.project.views.NewProjectForm"*/-->
+        <form th:object="${NewProjectForm}" th:action="@{/api/project}" method="post" action="#">
+            <div class="card hoverable holop-card">
+                <div class="card-content">
+                <div class="row">
+                    <div>
+                        <p style="font-weight: bold">Введте основную информацию</p>
+                        <br>
+                    </div>
+                    <div class="input-field col s5">
+                        <input th:field="*{first_name}" placeholder="Иван" id="first_name" type="text" class="validate">
+                        <label for="first_name">Имя</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input th:field="*{last_name}" placeholder="Иванов" id="last_name" type="text" class="validate">
+                        <label for="last_name">Фамилия</label>
+                    </div>
+                    <div class="input-field col s1">
+                        <input th:field="*{age}" placeholder="18" id="age" type="number" class="validate">
+                        <label for="age">Возраст</label>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <textarea th:text="*{wishes}" id="textarea" class="materialize-textarea" data-length="120"></textarea>
+                        <label for="textarea">Пожелания</label>
+                      </div>
+                    </div>
+                      <div class="qualitiesNumbers input-field col s6">
+                        <div class="qualitiesBox">
+                          <input th:field="*{kindnessImpactValue}" class="boxElements" type="number" min="-10" max="10" placeholder="0">
+                          <p class="qualitiesLabel">Доброта</p>
+                        </div>
+                        <div class="qualitiesBox">
+                          <input th:field="*{loveImpactValue}" class="boxElements" type="number" min="-10" max="10" placeholder="0">
+                          <p class="qualitiesLabel">Любовь</p>
+                        </div>
+                        <div class="qualitiesBox">
+                          <input th:field="*{honestImpactValue}" class="boxElements" type="number" min="-10" max="10" placeholder="0">
+                          <p class="qualitiesLabel">Честность</p>
+                        </div>
+                      </div>
+                    </div>
+                    <a class="waves-effect waves-light btn">Создать</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--<div th:replace="fragments/flooter :: flooter"></div>-->
+</body>
+</html>
