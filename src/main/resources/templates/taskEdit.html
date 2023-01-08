@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Новая задача</title>
+  <link rel="stylesheet" type="text/css" href="/css/core.css">
+  <script type="text/javascript" src="/js/greeting.js"></script>
+  <!-- Compiled and minified CSS -->
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+
+  <!-- Compiled and minified JavaScript -->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+ </head>
+ <body>
+ <div th:replace="fragments/header :: header">&nbsp;</div>
+
+ <div id="main_div">
+   <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+   <div id="content_container">
+     <div class="newTaskContainer">
+       <p style="font-weight: bold">Новая задача</p>
+       <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
+<!--      <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">-->
+        <p class="personalAndTypeText">Персонал:</p>
+        <select multiple class="widthMenu">
+          <tr th:each="worker : ${all_workers}">
+            <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
+            <option th:value="${worker}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
+          </tr>
+        </select>
+<!--        <p class="personalAndTypeText">Тип задачи:</p>-->
+<!--        <div class="input-field col s12">-->
+<!--          <select th:field="*{taskType}" class="widthMenu">-->
+<!--            <tr th:block th:each="type : ${taskTypes}">-->
+<!--              &lt;!&ndash;/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/&ndash;&gt;-->
+<!--              <option th:value="${{type}}" th:text="${type.description}"></option>-->
+<!--            </th:block>-->
+<!--            </tr>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <p class="personalAndTypeText">Связанный сценарий:</p>-->
+<!--        <select th:field="*{screenplay}" class="widthMenu">-->
+<!--          <th:block th:each="screenplay : ${allSreenplays}">-->
+<!--            &lt;!&ndash;/*@thymesVar id="screenplay" type="com.example.holopportal.screenplay.entities.Screenplay"*/&ndash;&gt;-->
+<!--            <option th:value="${{screenplay}}" th:text="${screenplay.code} + ' - ' + ${screenplay.name}"></option>-->
+<!--          </th:block>-->
+<!--        </select>-->
+<!--        <div>-->
+<!--          <label>Имя</label>-->
+<!--          <input th:field="*{name}" type="text" class="codeAndNameTask"></input>-->
+<!--          <label>Код задачи</label>-->
+<!--          <input th:field="*{code}" type="text" class="codeAndNameTask"></input>-->
+<!--        </div>-->
+<!--          <textarea th:field="*{description}" class="textAreaStyle"></textarea>-->
+<!--        <div>-->
+<!--          <div class="qualitiesNumbers">-->
+<!--            <div class="qualitiesBox">-->
+<!--              <input th:field="*{loveImpactValue}" class="boxElements" type="number" min="-10" max="10">-->
+<!--              <p class="qualitiesLabel">Доброта</p>-->
+<!--            </div>-->
+<!--            <div class="qualitiesBox">-->
+<!--              <input th:field="*{honestImpactValue}" class="boxElements" type="number" min="-10" max="10">-->
+<!--              <p class="qualitiesLabel">Любовь</p>-->
+<!--            </div>-->
+<!--            <div class="qualitiesBox">-->
+<!--              <input th:field="*{kindnessImpactValue}" class="boxElements" type="number" min="-10" max="10">-->
+<!--              <p class="qualitiesLabel">Честность</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="ApplyButtonContainer">-->
+<!--          <input type="submit" class="AceptButton"></input>-->
+<!--        </div>-->
+<!--      </form>-->
+    </div>
+  </div>
+</div>
+</body>
+</html>

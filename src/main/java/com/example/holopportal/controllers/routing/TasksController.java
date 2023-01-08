@@ -1,11 +1,13 @@
 package com.example.holopportal.controllers.routing;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
 import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.tasks.repository.TaskRepo;
 import com.example.holopportal.tasks.services.TaskTypeService;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
@@ -34,6 +36,11 @@ public class TasksController {
 
     @Inject
     ScreenplayService screenPlayService;
+    private final TaskRepo taskRepo;
+
+    public TasksController(TaskRepo taskRepo) {
+        this.taskRepo = taskRepo;
+    }
 
     @GetMapping("/new")
     public String newTask(Model model) {
@@ -78,6 +85,18 @@ public class TasksController {
             return "tasks";
         }
     }
-
+    @GetMapping("/{id}/edit")
+    public String taskEdit(Model model, @PathVariable int id){
+        User currentUser = getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
+        if(!taskRepo.existsById(id)){
+            return "redirect:/tasks";
+        }
+        Optional<Task> task = taskRepo.findById(id);
+        ArrayList<Task> res = new ArrayList<>();
+        task.ifPresent(res::add);
+        model.addAttribute("task",res);
+        return "taskEdit";
+    }
 
 }
