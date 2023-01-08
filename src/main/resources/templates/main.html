@@ -1,11 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragments/header :: common_head">
     <title>Holop Portal</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/css/core.css">
     <script type="text/javascript" src="/js/greeting.js"></script>
-
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>

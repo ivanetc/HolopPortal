@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-  <link rel="stylesheet" type="text/css" href="/css/core.css">
+<head th:fragment="common_head">
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/greeting.js"></script>
 </head>
 <body>
     <div id="header" th:fragment="header">
-      <p id="systemName">Информационная система Холоп </p>
-      <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
-      <p id = "usernamePosition" sec:authorize="isAuthenticated()" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName} + ' (' + ${currentUser.role.description} + ')' "/>
-        <a href="/logout" id = "userIconPosition">
-            <img src="/images/user_icon.png", style="width: 30px; float: left";>
-        </a>
+        <p id="systemName" >Информационная система Холоп </p>
+        <div></div>
+        <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
+        <div id="usernamePosition" sec:authorize="isAuthenticated()">
+            <p th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}"/>
+
+            <a href="#" id="userIconPosition" data-target="slide-out" class="sidenav-trigger">
+                <img src="/images/user_icon.png" alt="<>"/>
+            </a>
+
+<!--            <a href="/logout" id = "userIconPosition">-->
+<!--                <img src="/images/user_icon.png" alt="<>"/>-->
+<!--            </a>-->
+        </div >
+
+        <ul id="slide-out" class="sidenav">
+            <li><div class="user-view">
+                <div class="background">
+                    <img src="images/background.jpeg">
+                </div>
+                <a href="#user"><img class="circle" src="images/no_photo_light.png"></a>
+                <a><span class="white-text email" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}"/></a>
+<!--                <a href="#name"><span class="white-text name">John Doe</span></a>-->
+                <a href="#email"><span class="white-text email" th:text="${currentUser.getRole().description}"/></a>
+            </div></li>
+            <li><a href="#!">Редактировать профиль</a></li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="/logout">Выйти</a></li>
+        </ul>
     </div>
 </body>
 </html>
