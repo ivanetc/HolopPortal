@@ -35,7 +35,11 @@
                     <label>Код сценария</label>
                     <input th:field="*{code}" type="text" class="codeAndNameTask"></input>
                 </div>
-                <div th:replace="TextEditor/index :: textEditor"></div>
+                <textarea  th:field="*{content}" class="textAreaStyle"></textarea>
+    <!--       here we need instead <a ... <input type="submit"  -->
+                <div class="ApplyButtonContainer">
+                    <input type="submit" class="AceptButton">
+                </div>
             </form>
         </div>
     </div>
