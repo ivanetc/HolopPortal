@@ -50,7 +50,7 @@
 }
 
 a.button:hover{
-    background: #A67A3A;
+    background: #ffd18f;
 }
 
 .widthMenu{
@@ -349,4 +349,28 @@ radio:required {
     position: absolute;
     top: -20px;
     right: -20px;
+}
+footer {;
+  margin-top: -77px; /* Поднимаем вверх */
+  overflow: auto; /* Отменяем схлопывающиеся отступы */
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+}
+
+
+.footer-bg {
+  background: #ffd18f; /* Цвет фона подвала */
+  margin-top: 80px; /* Сдвигаем вниз */
+}
+.copyright {
+  width: 740px; /* Ширина макета без полей */
+  padding: 0 10px 10px; /* Поля */
+  margin: auto; /* Выравнивание по центру */
+  color: #000000; /* Цвет текста */
+}
+.copyright p {
+  margin: 0 0 5px 170px; /* Отступы текста */
 }
