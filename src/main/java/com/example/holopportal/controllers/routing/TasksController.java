@@ -87,6 +87,11 @@ public class TasksController {
     }
     @GetMapping("/{id}/edit")
     public String taskEdit(Model model, @PathVariable int id){
+        model.addAttribute("currentUser", userService.getCurrentUser().get());
+        model.addAttribute("all_workers", userService.getAllWorkers());
+        model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
+        model.addAttribute("allSreenplays", screenPlayService.getAllScreenplays());
+        model.addAttribute("editTaskForm", new NewTaskForm()); //todo do you need a new form?
         User currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         if(!taskRepo.existsById(id)){

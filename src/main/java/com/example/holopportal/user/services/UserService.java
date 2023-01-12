@@ -42,10 +42,10 @@ public class UserService implements UserDetailsService {
                 bCryptPasswordEncoder.encode(userForm.password),
                 role.orElseThrow(RuntimeException::new)
         );
-        user.firstName = userForm.firstName;
-        user.lastName = userForm.lastName;
-        user.login = userForm.login;
-        user.setPassword(bCryptPasswordEncoder.encode(userForm.password));
+        user.firstName = userForm.getFirstName();
+        user.lastName = userForm.getLastName();
+        user.login = userForm.getLogin();
+        user.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
 
         userRepo.save(user);
         return Optional.of(user);

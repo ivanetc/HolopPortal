@@ -19,37 +19,27 @@
 <body class="bodyForRegPage">
 <div class="container">
     <div class="row">
-        <form class="col s12" id="reg-form">
+        <!--/*@thymesVar id="userForm" type="com.example.holopportal.user.views.UserForm"*/-->
+        <form th:object="${userForm}" th:action="@{/api/user}" method="post" class="col s12" id="reg-form">
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="first_name" type="text" class="validate" required>
+                    <input th:field="*{firstName}" id="first_name" type="text" class="validate" required>
                     <label for="first_name">Имя</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate" required>
+                    <input th:field="*{lastName}" id="last_name" type="text" class="validate" required>
                     <label for="last_name">Фамилия</label>
                 </div>
             </div>
-<!--            <div class="input-field col s12">-->
-<!--                <label>-->
-<!--                    <select>-->
-<!--                        <option value="" disabled selected>Choose your option</option>-->
-<!--                        <option value="1">Option 1</option>-->
-<!--                        <option value="2">Option 2</option>-->
-<!--                        <option value="3">Option 3</option>-->
-<!--                    </select>-->
-<!--                </label>-->
-<!--                <label>Роль</label>-->
-<!--            </div>-->
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="login" type="text" class="validate" required>
+                    <input th:field="*{login}" id="login" type="text" class="validate" required>
                     <label for="login">Логин</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="password" class="validate" minlength="6" required>
+                    <input th:field="*{password}" id="password" type="password" class="validate" minlength="6" required>
                     <label for="password">Пароль</label>
                 </div>
             </div>
