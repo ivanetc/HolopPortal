@@ -35,16 +35,50 @@
                             <h4 th:text="${screenplay.author.lastName} + ' ' + ${screenplay.author.firstName}"></h4>
                         </div>
 
-                        <div class="col s12">
+                        <div class="col s9">
                             <h4>Содержание:</h4>
                             <p th:text="${screenplay.content}"></p>
-                            <h4>Связанные задачи:</h4>
-                            <div class="collection">
-                                <th:block th:each="task : ${screenplay.tasks}">
-                                    <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
-                                    <a class="collection-item orange-text text-darken-4" th:href="'/tasks/' + ${task.id}" th:text="${task.code} + '-' + ${task.name}"></a>
-                                </th:block>
+                            <div sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('WORKER')">
+                                <h4>Связанные задачи:</h4>
+                                <div class="collection">
+                                    <th:block th:each="task : ${screenplay.tasks}">
+                                        <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
+                                        <a class="collection-item orange-text text-darken-4" th:href="'/tasks/' + ${task.id}" th:text="${task.code} + '-' + ${task.name}"></a>
+                                    </th:block>
+                                </div>
                             </div>
+                        </div>
+                        <div class="col s3">
+                            <p>Статус согласования</p>
+                            <h5 th:text="${screenplay.status.description}"></h5>
+                        </div>
+                        <div class="col s9" sec:authorize="hasAuthority('DIRECTOR')">
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:disabled="${screenplay.status.id > 0}"
+                                    th:onclick="|setScreenplayStatus('${screenplay.id}', 1)|">
+                                Отправить на согласование заказчику
+                            </button>
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:disabled="${screenplay.status.id > 0}"
+                                    th:onclick="|setScreenplayStatus('${screenplay.id}', 3)|">
+                                Не согласовать
+                            </button>
+                        </div>
+                        <div class="col s9" sec:authorize="hasAuthority('REQUESTER')">
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:disabled="${screenplay.status.id != 1}"
+                                    th:onclick="|setScreenplayStatus('${screenplay.id}', 2)|">
+                                Согласовать
+                            </button>
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:disabled="${screenplay.status.id != 1}"
+                                    th:onclick="|setScreenplayStatus('${screenplay.id}', 3)|">
+                                Не согласовать
+                            </button>
                         </div>
                     </div>
                 </div>

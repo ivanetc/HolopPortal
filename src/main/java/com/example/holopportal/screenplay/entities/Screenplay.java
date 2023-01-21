@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.tasks.entities.TaskType;
 import com.example.holopportal.user.entities.User;
 
 @Entity
@@ -36,6 +37,9 @@ public class Screenplay {
 
     @OneToMany(mappedBy = "screenplay", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Task> tasks;
+
+    @OneToOne
+    public ScreenplayStatus status;
 
     public User getAuthor() {
         return author;

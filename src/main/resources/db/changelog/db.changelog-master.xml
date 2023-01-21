@@ -37,6 +37,14 @@
     </changeSet>
 
     <changeSet id="2" author="admin" labels="tasks-screenplay-tables">
+        <createTable tableName="screenplay_agreement_statuses">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="ScreenPlayAgreementStatus_id_pk" />
+            </column>
+            <column name="description" type="varchar"/>
+            <column name="code" type="varchar"/>
+        </createTable>
+
         <createTable tableName="screenplays">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="screenplay_id_pk" />
@@ -48,6 +56,13 @@
                 <constraints foreignKeyName="screenplays_author_user_id_fk"
                              referencedTableName="users"
                              referencedColumnNames="id"
+                />
+            </column>
+            <column name="status_id" type="int">
+                <constraints foreignKeyName="screenplays_status_id_fk"
+                             referencedTableName="screenplay_agreement_statuses"
+                             referencedColumnNames="id"
+                             notNullConstraintName="screenplays_status_id_notnull_k"
                 />
             </column>
         </createTable>
@@ -173,29 +188,26 @@
 
     </changeSet>
 
-    <changeSet id="5" author="admin" labels="tasks-screenplay-testdata">
-
-        <insert tableName="screenplays">
+    <changeSet id="5" author="admin">
+        <insert tableName="screenplay_agreement_statuses">
             <column name="id" value="0"/>
-            <column name="name" value="Сцена приветствия"/>
-            <column name="code" value="welcome-1"/>
-            <column name="content" value="Текст сценария. Может быть очень длинным"/>
-            <column name="author_user_id" value="1"/>
+            <column name="description" value="Черновик"/>
+            <column name="code" value="draft"/>
         </insert>
-
-        <insert tableName="task_types">
-            <column name="id" value="0"/>
-            <column name="description" value="Новая роль"/>
-        </insert>
-
-        <insert tableName="task_types">
+        <insert tableName="screenplay_agreement_statuses">
             <column name="id" value="1"/>
-            <column name="description" value="Задание на сценарий"/>
+            <column name="description" value="Ожидает согласования"/>
+            <column name="code" value="WaitingForApproval"/>
         </insert>
-
-        <insert tableName="task_types">
+        <insert tableName="screenplay_agreement_statuses">
             <column name="id" value="2"/>
-            <column name="description" value="Задание на декорации"/>
+            <column name="description" value="Согласован"/>
+            <column name="code" value="Approved"/>
+        </insert>
+        <insert tableName="screenplay_agreement_statuses">
+            <column name="id" value="3"/>
+            <column name="description" value="Не согласован"/>
+            <column name="code" value="NotApproved"/>
         </insert>
     </changeSet>
 
@@ -231,6 +243,35 @@
             <column name="code" value="Canceled"/>
         </insert>
     </changeSet>
+
+    <changeSet id="7" author="admin" labels="tasks-screenplay-testdata">
+
+        <insert tableName="screenplays">
+            <column name="id" value="0"/>
+            <column name="name" value="Сцена приветствия"/>
+            <column name="code" value="welcome-1"/>
+            <column name="content" value="Текст сценария. Может быть очень длинным"/>
+            <column name="author_user_id" value="1"/>
+            <column name="status_id" value="0"/>
+        </insert>
+
+        <insert tableName="task_types">
+            <column name="id" value="0"/>
+            <column name="description" value="Новая роль"/>
+        </insert>
+
+        <insert tableName="task_types">
+            <column name="id" value="1"/>
+            <column name="description" value="Задание на сценарий"/>
+        </insert>
+
+        <insert tableName="task_types">
+            <column name="id" value="2"/>
+            <column name="description" value="Задание на декорации"/>
+        </insert>
+    </changeSet>
+
+
 <!--
     <changeSet id="7" author="khilik">
         <insert tableName="tasks">

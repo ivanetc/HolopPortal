@@ -83,7 +83,7 @@ a.RejectButton:hover{
     background: #ffc993;
 }
 
-.AceptButton{
+.AcceptButton{
     background: #cdffa5;
     margin: 30px 40px;
     border: none;
@@ -96,7 +96,7 @@ a.RejectButton:hover{
     border-radius: 30px;
 }
 
-a.AceptButton:hover{
+a.AcceptButton:hover{
     background: #c1fa93;
 }
 

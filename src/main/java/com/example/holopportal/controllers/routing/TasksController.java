@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.example.holopportal.screenplay.entities.ScreenplayStatus;
 import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.repository.TaskRepo;
@@ -45,7 +46,10 @@ public class TasksController {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
-        model.addAttribute("allSreenplays", screenPlayService.getAllScreenplays());
+        model.addAttribute(
+                "allSreenplays",
+                screenPlayService.getAllScreenplaysWithStatus(ScreenplayStatus.DefaultStatusIds.Approved)
+        );
         model.addAttribute("newTaskForm", new NewTaskForm());
         return "newtask";
     }
@@ -91,7 +95,10 @@ public class TasksController {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
-        model.addAttribute("allSreenplays", screenPlayService.getAllScreenplays());
+        model.addAttribute(
+                "allSreenplays",
+                screenPlayService.getAllScreenplaysWithStatus(ScreenplayStatus.DefaultStatusIds.Approved)
+        );
         User currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
 
