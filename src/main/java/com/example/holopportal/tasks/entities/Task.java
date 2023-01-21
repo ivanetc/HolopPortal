@@ -30,6 +30,63 @@ public class Task {
     @Column(name = "id", unique = true, nullable = false)
     public int id;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getLoveImpactValue() {
+        return loveImpactValue;
+    }
+
+    public void setLoveImpactValue(Integer loveImpactValue) {
+        this.loveImpactValue = loveImpactValue;
+    }
+
+    public Integer getHonestImpactValue() {
+        return honestImpactValue;
+    }
+
+    public void setHonestImpactValue(Integer honestImpactValue) {
+        this.honestImpactValue = honestImpactValue;
+    }
+
+    public Integer getKindnessImpactValue() {
+        return kindnessImpactValue;
+    }
+
+    public void setKindnessImpactValue(Integer kindnessImpactValue) {
+        this.kindnessImpactValue = kindnessImpactValue;
+    }
+
+    public Task(String name, String code, String description, Integer loveImpactValue, Integer honestImpactValue, Integer kindnessImpactValue) {
+        this.name = name;
+        this.code = code;
+        this.description = description;
+        this.loveImpactValue = loveImpactValue;
+        this.honestImpactValue = honestImpactValue;
+        this.kindnessImpactValue = kindnessImpactValue;
+    }
+
     public String name;
     public String code;
     public String description;
