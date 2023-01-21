@@ -34,9 +34,6 @@ public class TasksRestController {
     TasksService tasksService;
 
     @Inject
-    TaskRepo taskRepo;
-
-    @Inject
     ScreenplayService screenPlayService;
 
     @PutMapping("/{id}/status")
@@ -68,23 +65,19 @@ public class TasksRestController {
         return redirectView;
     }
 
-    @PostMapping("/{id}/edit")
-    public String taskUpdate(@RequestParam String name,
-                             @RequestParam String code,
-                             @RequestParam String description,
-                             @RequestParam int kindnessImpactValue,
-                             @RequestParam int loveImpactValue,
-                             @RequestParam int honestImpactValue,
-                             @PathVariable int id,
-                             Model model){
-        Task task = taskRepo.findById(id).orElseThrow();
-        task.setName(name);
-        task.setCode(code);
-        task.setDescription(description);
-        task.setKindnessImpactValue(kindnessImpactValue);
-        task.setLoveImpactValue(loveImpactValue);
-        task.setHonestImpactValue(honestImpactValue);
-        taskRepo.save(task);
-        return "redirect:/tasks";
+    @PostMapping("/edit")
+    public RedirectView taskUpdate(Model model, @ModelAttribute NewTaskForm newTaskForm) {
+        Optional<Task> updatedTask = tasksService.updateTask(newTaskForm);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+
+        if (updatedTask.isPresent()) {
+            redirectView.setUrl("/tasks/" + updatedTask.get().id + "?isUpdated=true" );
+        } else {
+            redirectView.setUrl("/tasks");
+        }
+
+        return redirectView;
     }
 }

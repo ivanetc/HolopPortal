@@ -1,8 +1,11 @@
 package com.example.holopportal.tasks.entities;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -117,6 +120,11 @@ public class Task {
                 .findFirst();
 
         return statusOptional.orElseGet(this::getCommonStatus);
+    }
+
+    public List<User> getWorkers() {
+        return workerStatuses.stream()
+                .map(WorkerTaskExecutionStatus::getWorker).distinct().collect(Collectors.toList());
     }
 
     public TaskExecutionStatus getCommonStatus() {

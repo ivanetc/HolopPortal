@@ -145,7 +145,6 @@
         </insert>
 
         <insert tableName="users">
-            <column name="id" value="0"/>
             <column name="login" value="ivanetsas"/>
             <column name="first_name" value="Alexander"/>
             <column name="last_name" value="Ivanets"/>
@@ -155,7 +154,6 @@
         </insert>
 
         <insert tableName="users">
-            <column name="id" value="1"/>
             <column name="login" value="khilike"/>
             <column name="first_name" value="Egor"/>
             <column name="last_name" value="Khilik"/>
@@ -165,7 +163,6 @@
         </insert>
 
         <insert tableName="users">
-            <column name="id" value="2"/>
             <column name="login" value="nosovas"/>
             <column name="first_name" value="Svetlana"/>
             <column name="last_name" value="Nosova"/>
@@ -183,7 +180,7 @@
             <column name="name" value="Сцена приветствия"/>
             <column name="code" value="welcome-1"/>
             <column name="content" value="Текст сценария. Может быть очень длинным"/>
-            <column name="author_user_id" value="0"/>
+            <column name="author_user_id" value="1"/>
         </insert>
 
         <insert tableName="task_types">

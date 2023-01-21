@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("/api/user")
-public class RegRestController {
+@RequestMapping("/api/user/registration")
+public class UserRegistrationRestController {
 
     @Inject
     UserService userService;
@@ -27,7 +27,7 @@ public class RegRestController {
 
         RedirectView redirectView = new RedirectView();
         redirectView.setContextRelative(true);
-        redirectView.setUrl("/login");
+        redirectView.setUrl("/1234");
 
 
         return redirectView;

@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row">
         <!--/*@thymesVar id="userForm" type="com.example.holopportal.user.views.UserForm"*/-->
-        <form th:object="${userForm}" th:action="@{/api/user}" method="post" class="col s12" id="reg-form">
+        <form th:object="${userForm}" th:action="@{/api/user/registration}" method="post" class="col s12" id="reg-form">
             <div class="row">
                 <div class="input-field col s6">
                     <input th:field="*{firstName}" id="first_name" type="text" class="validate" required>
@@ -50,9 +50,9 @@
                     </button>
                 </div>
             </div>
-            <div>
-            <a title="Login" class="ngl btn-floating btn-large waves-effect waves-light red" href="/login"><i class="material-icons">input</i></a>
-            </div>
+<!--            <div>-->
+<!--            <a title="Login" class="ngl btn-floating btn-large waves-effect waves-light red" href="/login"><i class="material-icons">input</i></a>-->
+<!--            </div>-->
         </form>
     </div>
 </div>

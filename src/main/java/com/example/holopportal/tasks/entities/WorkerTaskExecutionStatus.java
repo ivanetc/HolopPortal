@@ -44,6 +44,10 @@ public class WorkerTaskExecutionStatus {
         this.task = task;
     }
 
+    public User getWorker() {
+        return worker;
+    }
+
     @PreRemove
     private void removeFromTask() {
         task.workerStatuses.remove(this);

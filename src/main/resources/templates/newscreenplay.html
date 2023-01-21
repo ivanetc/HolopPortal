@@ -27,7 +27,7 @@
     <div id="content_container">
         <div id="NewTaskContainer ">
             <!--/*@thymesVar id="screenplayForm" type="com.example.holopportal.screenplay.views.ScreenplayForm"*/-->
-            <form th:object="${newScreenplayForm}" th:action="@{/screenplay/new}" method="post" style="margin: 40px">
+            <form th:object="${newScreenplayForm}" th:action="@{/api/screenplay}" method="post" style="margin: 40px">
                 <p style="font-weight: bold">Новый сценарий</p>
                 <div>
                     <label>Имя</label>

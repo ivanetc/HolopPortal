@@ -30,7 +30,8 @@
             <img th:case="7" class="predictImage" src="/images/prediction images/prediction_img_step_7.png"/>
             <img th:case="8" class="predictImage" src="/images/prediction images/prediction_img_step_8.png"/>
             <img th:case="9" class="predictImage" src="/images/prediction images/prediction_img_step_9.png"/>
-            <img th:case="10" class="predictImage" src="/images/prediction images/prediction_img_step_10.png"/></div>
+            <img th:case="10" class="predictImage" src="/images/prediction images/prediction_img_step_10.png"/>
+        </div>
         <div class="qualitiesNumbers">
             <div class="qualitiesBox">
                 <p th:text="${predictionInfo.kindness_current} + ' / ' + ${predictionInfo.kindness_target}"></p>

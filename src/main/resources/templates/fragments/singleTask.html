@@ -21,6 +21,9 @@
             <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
                 Задание успешно создано
             </div>
+            <div th:if="${isUpdated == true}" class="newTaskSuccessfullyAddedNotification">
+                Задание успешно изменено
+            </div>
             <div th:fragment="singleTask(task)">
                 <!--/*@thymesVar id="task" type="com.example.holopportal.tasks.entities.Task"*/-->
                 <div class="card hoverable holop-card">

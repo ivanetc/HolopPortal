@@ -7,6 +7,7 @@ import com.example.holopportal.user.entities.User;
 import java.util.List;
 
 public class NewTaskForm {
+    private int id;
     private String name;
     private String code;
     private String description;
@@ -87,5 +88,13 @@ public class NewTaskForm {
 
     public void setScreenplay(Screenplay screenplay) {
         this.screenplay = screenplay;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

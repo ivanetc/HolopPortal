@@ -17,8 +17,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.InstanceNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -108,19 +110,10 @@ public class TasksService {
 
     public Optional<Task> createTask(NewTaskForm newTaskForm) {
         Task newTask = new Task();
-        newTask.taskType = newTaskForm.getTaskType();
-        newTask.description = newTaskForm.getDescription();
-        newTask.name = newTaskForm.getName();
-        newTask.code = newTaskForm.getCode();
-        newTask.kindnessImpactValue = newTaskForm.getKindnessImpactValue();
-        newTask.loveImpactValue = newTaskForm.getLoveImpactValue();
-        newTask.honestImpactValue = newTaskForm.getHonestImpactValue();
-        newTask.screenplay = newTaskForm.getScreenplay();
-
+        fillTaskFromForm(newTask, newTaskForm);
         Task savedTask = taskRepo.save(newTask);
 
-        TaskExecutionStatus confirmWaiting = taskStatusRepo.findById(TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "task not found"));
+        TaskExecutionStatus confirmWaiting = getConfirmWaitingStatus();
         for (User worker :
                 newTaskForm.getWorkers()) {
             WorkerTaskExecutionStatus workerStatus = new WorkerTaskExecutionStatus(worker, savedTask, confirmWaiting);
@@ -131,11 +124,67 @@ public class TasksService {
 
         }
 
+        return Optional.of(savedTask);
+    }
+
+    private TaskExecutionStatus getConfirmWaitingStatus() {
+        return taskStatusRepo.findById(TaskExecutionStatus.DefaultStatusIds.WaitingForConfirmation.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "status not found"));
+    }
+
+    private static void fillTaskFromForm(Task newTask, NewTaskForm newTaskForm) {
+        newTask.taskType = newTaskForm.getTaskType();
+        newTask.description = newTaskForm.getDescription();
+        newTask.name = newTaskForm.getName();
+        newTask.code = newTaskForm.getCode();
+        newTask.kindnessImpactValue = newTaskForm.getKindnessImpactValue();
+        newTask.loveImpactValue = newTaskForm.getLoveImpactValue();
+        newTask.honestImpactValue = newTaskForm.getHonestImpactValue();
+        newTask.screenplay = newTaskForm.getScreenplay();
+    }
+
+    public Optional<Task> updateTask(NewTaskForm editTaskForm) {
+        Optional<Task> optionalTask = taskRepo.findById(editTaskForm.getId());
+
+        if (!optionalTask.isPresent()) {
+            return Optional.empty();
+        }
+
+        Task oldTask = optionalTask.get();
+        fillTaskFromForm(oldTask, editTaskForm);
+        Task savedTask = taskRepo.save(oldTask);
+
+        List<WorkerTaskExecutionStatus> workerStatuses = new ArrayList<>(
+                workerTaskStatusRepo.findAllByTaskId(oldTask.id)
+                    .stream()
+                    .sorted(Comparator.comparing(st -> st.createdAt))
+                    .collect(Collectors.toMap(WorkerTaskExecutionStatus::getWorker, p -> p, (p, q) -> p))
+                    .values()
+        );
+        List<User> oldWorkers = oldTask.getWorkers();
+        List<User> newWorkers = editTaskForm.getWorkers();
+
+        for (WorkerTaskExecutionStatus workerStatus : workerStatuses) {
+            if (!newWorkers.contains(workerStatus.getWorker())) {
+                workerTaskStatusRepo.deleteAllByTaskIdAndWorkerId(savedTask.id, workerStatus.getWorker().getId());
+                savedTask.workerStatuses.remove(workerStatus);
+            }
+        }
+
+        TaskExecutionStatus confirmWaiting = getConfirmWaitingStatus();
+        for (User newWorker : newWorkers) {
+            if (!oldWorkers.contains(newWorker)) {
+                WorkerTaskExecutionStatus workerStatus = new WorkerTaskExecutionStatus(newWorker, savedTask, confirmWaiting);
+                WorkerTaskExecutionStatus savedStatus = workerTaskStatusRepo.save(workerStatus);
+                savedTask.workerStatuses.add(savedStatus);
+            }
+        }
 
         return Optional.of(savedTask);
     }
 
-    public boolean isPossibleToSetStatus(Task task, User user, TaskExecutionStatus statusToCheck) {
+
+        public boolean isPossibleToSetStatus(Task task, User user, TaskExecutionStatus statusToCheck) {
         Optional<WorkerTaskExecutionStatus> workerStatusOpt = task.workerStatuses.stream()
                 .filter(status -> status.worker.getId() == user.getId())
                 .findFirst();

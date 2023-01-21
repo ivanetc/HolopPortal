@@ -13,6 +13,7 @@ import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/tasks")
@@ -36,11 +38,7 @@ public class TasksController {
 
     @Inject
     ScreenplayService screenPlayService;
-    private final TaskRepo taskRepo;
 
-    public TasksController(TaskRepo taskRepo) {
-        this.taskRepo = taskRepo;
-    }
 
     @GetMapping("/new")
     public String newTask(Model model) {
@@ -71,10 +69,13 @@ public class TasksController {
     }
 
     @GetMapping("/{id}")
-    public String getTasks(Model model, @PathVariable int id, @RequestParam(required = false) boolean isNew) {
+    public String getTasks(Model model, @PathVariable int id,
+                           @RequestParam(required = false) boolean isNew,
+                           @RequestParam(required = false) boolean isUpdated) {
         User currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("isNew", isNew);
+        model.addAttribute("isUpdated", isUpdated);
 
         Optional<Task> task = tasksService.getTaskById(id);
         if (task.isPresent()) {
@@ -91,17 +92,40 @@ public class TasksController {
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());
         model.addAttribute("allSreenplays", screenPlayService.getAllScreenplays());
-        model.addAttribute("editTaskForm", new NewTaskForm()); //todo do you need a new form?
         User currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
-        if(!taskRepo.existsById(id)){
+
+        Optional<Task> taskOptional = tasksService.getTaskById(id);
+
+        if (!taskOptional.isPresent()) {
+            model.addAttribute("newTaskForm", new NewTaskForm());
             return "redirect:/tasks";
         }
-        Optional<Task> task = taskRepo.findById(id);
+
+        Task task = taskOptional.get();
+        model.addAttribute("editTaskForm", mapToForm(task)); //todo do you need a new form?
+
         ArrayList<Task> res = new ArrayList<>();
-        task.ifPresent(res::add);
-        model.addAttribute("task",res);
+        taskOptional.ifPresent(res::add);
+
+        model.addAttribute("task", res);
         return "taskEdit";
+    }
+
+    @NotNull
+    private static NewTaskForm mapToForm(Task task) {
+        NewTaskForm newTaskForm = new NewTaskForm();
+        newTaskForm.setId(task.id);
+        newTaskForm.setName(task.name);
+        newTaskForm.setTaskType(task.taskType);
+        newTaskForm.setScreenplay(task.screenplay);
+        newTaskForm.setCode(task.code);
+        newTaskForm.setDescription(task.description);
+        newTaskForm.setWorkers(task.getWorkers());
+        newTaskForm.setHonestImpactValue(task.honestImpactValue);
+        newTaskForm.setKindnessImpactValue(task.kindnessImpactValue);
+        newTaskForm.setLoveImpactValue(task.loveImpactValue);
+        return newTaskForm;
     }
 
 }
