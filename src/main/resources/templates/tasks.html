@@ -21,10 +21,9 @@
         <th:block th:each="task : ${tasks}">
             <div th:replace="fragments/singleTask :: singleTask (task=${task})"></div>
         </th:block>
-
     </div>
 
 </div>
-
+<!--    <div th:replace="fragments/flooter :: flooter"></div>-->
 </body>
 </html>

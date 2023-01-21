@@ -7,6 +7,7 @@ import javax.management.InstanceNotFoundException;
 
 import com.example.holopportal.screenplay.services.ScreenplayService;
 import com.example.holopportal.tasks.entities.Task;
+import com.example.holopportal.tasks.repository.TaskRepo;
 import com.example.holopportal.tasks.services.TasksService;
 import com.example.holopportal.tasks.views.NewTaskForm;
 import com.example.holopportal.user.entities.User;
@@ -31,6 +32,9 @@ public class TasksRestController {
 
     @Inject
     TasksService tasksService;
+
+    @Inject
+    TaskRepo taskRepo;
 
     @Inject
     ScreenplayService screenPlayService;
@@ -62,5 +66,25 @@ public class TasksRestController {
         }
 
         return redirectView;
+    }
+
+    @PostMapping("/{id}/edit")
+    public String taskUpdate(@RequestParam String name,
+                             @RequestParam String code,
+                             @RequestParam String description,
+                             @RequestParam int kindnessImpactValue,
+                             @RequestParam int loveImpactValue,
+                             @RequestParam int honestImpactValue,
+                             @PathVariable int id,
+                             Model model){
+        Task task = taskRepo.findById(id).orElseThrow();
+        task.setName(name);
+        task.setCode(code);
+        task.setDescription(description);
+        task.setKindnessImpactValue(kindnessImpactValue);
+        task.setLoveImpactValue(loveImpactValue);
+        task.setHonestImpactValue(honestImpactValue);
+        taskRepo.save(task);
+        return "redirect:/tasks";
     }
 }

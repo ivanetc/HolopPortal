@@ -1,15 +1,15 @@
 package com.example.holopportal.user.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.entities.UserRole;
 import com.example.holopportal.user.repository.UserRepo;
+import com.example.holopportal.user.repository.UserRoleRepo;
+import com.example.holopportal.user.views.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,13 +21,34 @@ import org.springframework.stereotype.Component;
 public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
+    private final UserRoleRepo userRoleRepo;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepo userRepo) {
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepo userRepo, UserRoleRepo userRoleRepo) {
         this.userRepo = userRepo;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRoleRepo = userRoleRepo;
         setDefaultPasswords(this.userRepo.findAll());
+    }
+
+    public Optional<User> createNewUser(UserForm userForm) {
+        Optional<UserRole> role = userRoleRepo.findById(UserRole.DefaultUserRoles.WORKER.id); // todo guest
+        User user = new User(
+                userForm.login,
+                userForm.firstName,
+                userForm.lastName,
+                bCryptPasswordEncoder.encode(userForm.password),
+                role.orElseThrow(RuntimeException::new)
+        );
+        user.firstName = userForm.getFirstName();
+        user.lastName = userForm.getLastName();
+        user.login = userForm.getLogin();
+        user.setPassword(bCryptPasswordEncoder.encode(userForm.getPassword()));
+
+        userRepo.save(user);
+        return Optional.of(user);
     }
 
     private void setDefaultPasswords(Iterable<User> users) {

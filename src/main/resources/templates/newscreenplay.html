@@ -12,6 +12,12 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="/js/greeting.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
@@ -21,7 +27,7 @@
     <div id="content_container">
         <div id="NewTaskContainer ">
             <!--/*@thymesVar id="screenplayForm" type="com.example.holopportal.screenplay.views.ScreenplayForm"*/-->
-            <form th:object="${newScreenplayForm}" th:action="@{/api/screenplay}" method="post" style="margin: 40px">
+            <form th:object="${newScreenplayForm}" th:action="@{/screenplay/new}" method="post" style="margin: 40px">
                 <p style="font-weight: bold">Новый сценарий</p>
                 <div>
                     <label>Имя</label>
@@ -29,7 +35,11 @@
                     <label>Код сценария</label>
                     <input th:field="*{code}" type="text" class="codeAndNameTask"></input>
                 </div>
-                <div th:replace="fragments/textEditor"></div>
+                <textarea  th:field="*{content}" class="textAreaStyle"></textarea>
+    <!--       here we need instead <a ... <input type="submit"  -->
+                <div class="ApplyButtonContainer">
+                    <input type="submit" class="AceptButton">
+                </div>
             </form>
         </div>
     </div>
