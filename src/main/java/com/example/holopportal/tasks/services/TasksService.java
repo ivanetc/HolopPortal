@@ -1,13 +1,5 @@
 package com.example.holopportal.tasks.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.management.InstanceNotFoundException;
-
 import com.example.holopportal.tasks.entities.Task;
 import com.example.holopportal.tasks.entities.TaskExecutionStatus;
 import com.example.holopportal.tasks.entities.WorkerTaskExecutionStatus;
@@ -16,12 +8,20 @@ import com.example.holopportal.tasks.repository.TaskStatusRepo;
 import com.example.holopportal.tasks.repository.TaskTypeRepo;
 import com.example.holopportal.tasks.repository.WorkerTaskStatusRepo;
 import com.example.holopportal.tasks.views.NewTaskForm;
+import com.example.holopportal.telegram_bot.TelegramBotUtil;
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.management.InstanceNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class TasksService {
@@ -34,13 +34,16 @@ public class TasksService {
 
     TaskTypeRepo taskTypeRepo;
 
+    TelegramBotUtil telegramBotUtil;
+
     @Autowired
     TasksService(TaskRepo taskRepo, TaskStatusRepo taskStatusRepo, WorkerTaskStatusRepo workerTaskStatusRepo,
-                 TaskTypeRepo taskTypeRepo) {
+                 TaskTypeRepo taskTypeRepo, TelegramBotUtil telegramBotUtil) {
         this.taskRepo = taskRepo;
         this.taskStatusRepo = taskStatusRepo;
         this.workerTaskStatusRepo = workerTaskStatusRepo;
         this.taskTypeRepo = taskTypeRepo;
+        this.telegramBotUtil = telegramBotUtil;
     }
 
 
@@ -123,7 +126,12 @@ public class TasksService {
             WorkerTaskExecutionStatus workerStatus = new WorkerTaskExecutionStatus(worker, savedTask, confirmWaiting);
             WorkerTaskExecutionStatus savedStatus = workerTaskStatusRepo.save(workerStatus);
             savedTask.workerStatuses.add(savedStatus);
+
+            telegramBotUtil.sentNotification(worker, "Создана новая задача \"" + newTask.name + "\"");
+
         }
+
+
         return Optional.of(savedTask);
     }
 

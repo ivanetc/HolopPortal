@@ -24,12 +24,15 @@
             <column name="last_name" type="varchar"/>
             <column name="login" type="varchar"/>
             <column name="password" type="varchar"/>
+            <column name="chat_id" type="varchar" />
+            <column name="telegram_login" type="varchar"/>
             <column name="role_id" type="int">
                 <constraints foreignKeyName="userRoles_role_id_fk"
                              referencedTableName="user_roles"
                              referencedColumnNames="id"
                 />
             </column>
+
         </createTable>
     </changeSet>
 
@@ -147,6 +150,8 @@
             <column name="first_name" value="Alexander"/>
             <column name="last_name" value="Ivanets"/>
             <column name="role_id" value="0"/>
+            <column name="chat_id" value="200622296"/>
+            <column name="telegram_login" value="ivanetc"/>
         </insert>
 
         <insert tableName="users">
@@ -155,6 +160,8 @@
             <column name="first_name" value="Egor"/>
             <column name="last_name" value="Khilik"/>
             <column name="role_id" value="1"/>
+            <column name="chat_id" value="200622296"/>
+            <column name="telegram_login" value="khilikegor"/>
         </insert>
 
         <insert tableName="users">
@@ -163,6 +170,8 @@
             <column name="first_name" value="Svetlana"/>
             <column name="last_name" value="Nosova"/>
             <column name="role_id" value="2"/>
+            <column name="chat_id" value="200622296"/>
+            <column name="telegram_login" value="svtn555"/>
         </insert>
 
     </changeSet>

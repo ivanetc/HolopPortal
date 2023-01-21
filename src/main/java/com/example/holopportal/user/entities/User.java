@@ -1,29 +1,12 @@
 package com.example.holopportal.user.entities;
 
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.jaas.JaasGrantedAuthority;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(schema = "public", name = "\"Users\"")
@@ -45,6 +28,12 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "chat_id")
+    private String chatId;
+
+    @Column(name = "telegram_login")
+    private String telegramLogin;
+
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
@@ -55,12 +44,14 @@ public class User implements UserDetails {
 
     public User() {};
 
-    public User(String login, String firstName, String lastName, int id, UserRole role) {
+    public User(String login, String firstName, String lastName, int id, UserRole role, String chatId, String telegramLogin) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
         this.role = role;
+        this.chatId = chatId;
+        this.telegramLogin = telegramLogin;
     }
 
     public User(String login, String firstName, String lastName, String password, UserRole role) {
@@ -73,6 +64,22 @@ public class User implements UserDetails {
 
     public int getId() {
         return id;
+    }
+
+    public String getChatId(){
+        return chatId;
+    }
+
+    public String getTelegramLogin() {
+        return telegramLogin;
+    }
+
+    public void setTelegramLogin(String telegramLogin) {
+        this.telegramLogin = telegramLogin;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 
     public UserRole getRole()
