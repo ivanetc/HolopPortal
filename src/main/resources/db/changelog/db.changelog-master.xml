@@ -44,7 +44,6 @@
             </column>
             <column name="name" type="varchar"/>
             <column name="description" type="varchar"/>
-            <column name="description" type="varchar"/>
             <column name="actor_id" type="int">
                 <constraints foreignKeyName="role_user_id_fk"
                              referencedTableName="users"
@@ -88,7 +87,7 @@
         <!--Связь ролей и элементов сценария-->
         <createTable tableName="screenplay_roles">
             <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="workerTaskExecutionStatus_id_pk" />
+                <constraints primaryKey="true" primaryKeyName="screenplay_role_id_pk" />
             </column>
             <column name="role_id" type="int">
                 <constraints foreignKeyName="RolesToScreenplays_role_id_fk"

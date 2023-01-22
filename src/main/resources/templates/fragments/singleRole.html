@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Holop Portal. Screenplays</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/tasks.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
+            Роль успешно создана
+        </div>
+        <div th:fragment="singleRole(role)">
+            <div class="card hoverable holop-card">
+                <div class="card-content">
+                    <!--/*@thymesVar id="role" type="com.example.holopportal.screenplay.entities.Role"*/-->
+                    <div class="row">
+                        <div class="col s8">
+                            <h4 th:text="${role.name}"></h4>
+                            <p th:text="${role.description}"></p>
+                        </div>
+                        <div class="col s2">
+                            <p>Исполнитель</p>
+                            <h4 th:text="${role.getActorName()}"></h4>
+                        </div>
+                        <div class="col s2" sec:authorize="hasAuthority('DIRECTOR')">
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:if="${role.actor == null}"
+                                    th:onclick="|setScreenplayStatus('${role.id}', 1)|"
+                            >
+                                Назначить на роль
+                            </button>
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:if="${role.actor != null}"
+                                    th:onclick="|setScreenplayStatus('${role.id}', 3)|">
+                                Замена актера
+                            </button>
+                        </div>
+                        <div class="col s2" sec:authorize="hasAuthority('SCREEN_WRITER')">
+                            <button class="waves-effect waves-light btn"
+                                    type="button"
+                                    th:onclick="|setScreenplayStatus('${role.id}', 2)|">
+                                Редактировать
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
