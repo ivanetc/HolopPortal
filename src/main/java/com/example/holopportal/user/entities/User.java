@@ -1,5 +1,6 @@
 package com.example.holopportal.user.entities;
 
+import com.example.holopportal.screenplay.entities.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(schema = "public", name = "\"Users\"")
@@ -37,6 +39,9 @@ public class User implements UserDetails {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
+
+    @OneToMany(mappedBy = "actor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Role> screenplayRoles;
 
     public void setId(Integer id) {
         this.id = id;
@@ -125,5 +130,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Role> getScreenplayRoles() {
+        return screenplayRoles;
+    }
+
+    public void setScreenplayRoles(List<Role> screenplayRoles) {
+        this.screenplayRoles = screenplayRoles;
     }
 }

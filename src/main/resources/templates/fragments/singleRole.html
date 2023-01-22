@@ -21,6 +21,9 @@
         <div th:if="${isNew == true}" class="newTaskSuccessfullyAddedNotification">
             Роль успешно создана
         </div>
+        <div th:if="${isUpdated == true}" class="newTaskSuccessfullyAddedNotification">
+            Роль успешно изменена
+        </div>
         <div th:fragment="singleRole(role)">
             <div class="card hoverable holop-card">
                 <div class="card-content">
@@ -35,26 +38,11 @@
                             <h4 th:text="${role.getActorName()}"></h4>
                         </div>
                         <div class="col s2" sec:authorize="hasAuthority('DIRECTOR')">
-                            <button class="waves-effect waves-light btn"
-                                    type="button"
-                                    th:if="${role.actor == null}"
-                                    th:onclick="|setScreenplayStatus('${role.id}', 1)|"
-                            >
-                                Назначить на роль
-                            </button>
-                            <button class="waves-effect waves-light btn"
-                                    type="button"
-                                    th:if="${role.actor != null}"
-                                    th:onclick="|setScreenplayStatus('${role.id}', 3)|">
-                                Замена актера
-                            </button>
+                            <a class="waves-effect waves-light btn" type="button" th:if="${role.actor == null}" th:href="'/roles/' + ${role.id} + '/assign'">Назначить на роль</a>
+                            <a class="waves-effect waves-light btn" type="button" th:if="${role.actor != null}" th:href="'/roles/' + ${role.id} + '/assign'">Замена актера</a>
                         </div>
                         <div class="col s2" sec:authorize="hasAuthority('SCREEN_WRITER')">
-                            <button class="waves-effect waves-light btn"
-                                    type="button"
-                                    th:onclick="|setScreenplayStatus('${role.id}', 2)|">
-                                Редактировать
-                            </button>
+                            <a class="waves-effect waves-light btn" type="button" th:href="'/roles/' + ${role.id} + '/edit'">Редактировать</a>
                         </div>
                     </div>
                 </div>

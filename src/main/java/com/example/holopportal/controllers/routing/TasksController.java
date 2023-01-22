@@ -91,7 +91,7 @@ public class TasksController {
         }
     }
     @GetMapping("/{id}/edit")
-    public String taskEdit(Model model, @PathVariable int id){
+    public String taskEdit(Model model, @PathVariable int id) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("all_workers", userService.getAllWorkers());
         model.addAttribute("taskTypes", taskTypeService.getAllTaskTypes());

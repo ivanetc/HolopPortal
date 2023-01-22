@@ -10,6 +10,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     List<User> findByLogin(String login);
 
+    List<User> findAllByRoleId(int roleId);
+
     User findById(int id);
 
     Optional<User> findByTelegramLogin(String telegramLogin);

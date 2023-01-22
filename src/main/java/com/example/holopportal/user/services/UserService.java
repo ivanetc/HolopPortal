@@ -2,6 +2,7 @@ package com.example.holopportal.user.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.entities.UserRole;
@@ -62,7 +63,13 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getAllWorkers() {
-        return userRepo.findAll();
+        return userRepo.findAllByRoleId(UserRole.DefaultUserRoles.WORKER.getId());
+    }
+
+    public List<User> getAllWorkersWithoutScreenplayRole() {
+        return getAllWorkers().stream()
+                .filter(worker -> worker.getScreenplayRoles() == null || worker.getScreenplayRoles().size() == 0)
+                .collect(Collectors.toList());
     }
 
     @Override

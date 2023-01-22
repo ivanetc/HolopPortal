@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Новый сценарий</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/core.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/greeting.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+
+<div id="main_div">
+    <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
+    <div id="content_container">
+        <div id="NewTaskContainer ">
+            <!--/*@thymesVar id="roleForm" type="com.example.holopportal.screenplay.views.RoleForm"*/-->
+            <form th:object="${roleForm}" th:action="@{/api/roles}" method="post" style="margin: 40px">
+                <input th:field="*{id}" style="display: none" type="number">
+                <p th:if="${roleForm.getId() == null}" style="font-weight: bold">Новый сценарий</p>
+                <p th:if="${roleForm.getId() != null}" style="font-weight: bold">Редактирование сценария</p>
+                <div>
+                    <label>Имя</label>
+                    <input th:field="*{name}" type="text" class="codeAndNameTask"/>
+                    <label>Код сценария</label>
+                    <input th:field="*{description}" type="text" class="codeAndNameTask"/>
+                </div>
+                <div class="ApplyButtonContainer">
+                    <input type="submit" class="AcceptButton">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

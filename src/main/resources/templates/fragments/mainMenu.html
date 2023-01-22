@@ -4,11 +4,11 @@
 <body>
 <div id="menu_container" th:fragment="menu">
     <br>
-    <a sec:authorize="hasAuthority('DIRECTOR')" href="/tasks/new" class="button" >
-        <img src="/images/task_icon.png", style="width: 30px; float: left";>Новая задача
-    </a>
     <a href="/" class="button" >
         <img src="/images/user_icon.png", style="width: 30px; float: left";>Главная страницa
+    </a>
+    <a sec:authorize="hasAuthority('DIRECTOR')" href="/tasks/new" class="button" >
+        <img src="/images/task_icon.png", style="width: 30px; float: left";>Новая задача
     </a>
     <a sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('WORKER')" href="/tasks" class= "button" >
         <img src="/images/current_task_icon.png", style="width: 30px; float: left"; >Текущие задачи
@@ -16,10 +16,16 @@
     <a sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('REQUESTER')" href="/prediction" class="button">
         <img src="/images/prediction_icon.png", style="width: 30px;float: left;">Прогнозирование
     </a>
-    <a sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('WORKER') OR hasAuthority('REQUESTER')" href="/screenplay" class= "button" >
+    <a sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('WORKER') OR hasAuthority('REQUESTER') OR hasAuthority('SCREEN_WRITER')" href="/roles" class= "button" >
+        <img src="/images/current_task_icon.png", style="width: 30px; float: left"; > Список ролей
+    </a>
+    <a sec:authorize="hasAuthority('SCREEN_WRITER')" href="/roles/new" class= "button" >
+        <img src="/images/current_task_icon.png", style="width: 30px; float: left"; > Новая роль
+    </a>
+    <a sec:authorize="hasAuthority('DIRECTOR') OR hasAuthority('WORKER') OR hasAuthority('REQUESTER') OR hasAuthority('SCREEN_WRITER')" href="/screenplay" class= "button" >
         <img src="/images/current_task_icon.png", style="width: 30px; float: left"; > Список сценариев
     </a>
-    <a sec:authorize="hasAuthority('DIRECTOR')" href="/screenplay/new" class="button" >
+    <a sec:authorize="hasAuthority('SCREEN_WRITER')" href="/screenplay/new" class="button" >
         <img src="/images/task_icon.png", style="width: 30px; float: left";>Новый сценарий
     </a>
     <a sec:authorize="hasAuthority('REQUESTER')" href="/info" class="button">
