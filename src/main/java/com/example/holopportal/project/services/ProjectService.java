@@ -5,18 +5,20 @@ import com.example.holopportal.project.repository.ProjectRepo;
 import com.example.holopportal.project.views.NewProjectForm;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 @Component
 public class ProjectService {
 
+    @Inject
     ProjectRepo projectRepo;
 
     public Optional<Project> createProject(NewProjectForm newProjectForm){
         Project newProject = new Project();
 
-        newProject.first_name = newProjectForm.getFirst_name();
-        newProject.last_name = newProjectForm.getLast_name();
+        newProject.firstName = newProjectForm.getFirstName();
+        newProject.lastName = newProjectForm.getLastName();
         newProject.age = newProjectForm.getAge();
         newProject.wishes = newProjectForm.getWishes();
         newProject.honestImpactValue = newProjectForm.getHonestImpactValue();

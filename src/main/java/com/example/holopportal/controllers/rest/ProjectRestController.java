@@ -34,7 +34,7 @@ public class ProjectRestController {
         if (createdProject.isPresent()) {
             redirectView.setUrl("/info/" + createdProject.get().id + "?isNew=true" );
         } else {
-            redirectView.setUrl("/screenplay");
+            redirectView.setUrl("/info");
         }
 
         return redirectView;

@@ -276,8 +276,8 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="project_id_pk"/>
             </column>
-            <column name="first_name" type="varchar"/>
-            <column name="last_name" type="varchar"/>
+            <column name="firstName" type="varchar"/>
+            <column name="lastName" type="varchar"/>
             <column name="wishes" type="varchar"/>
             <column name="age" type="int"/>
             <column name="loveImpactValue" type="int"/>
