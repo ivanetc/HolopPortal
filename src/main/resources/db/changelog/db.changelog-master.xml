@@ -37,6 +37,23 @@
     </changeSet>
 
     <changeSet id="2" author="admin" labels="tasks-screenplay-tables">
+        <!--Роли в сценариях-->
+        <createTable tableName="roles">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="roles_id_pk" />
+            </column>
+            <column name="name" type="varchar"/>
+            <column name="description" type="varchar"/>
+            <column name="description" type="varchar"/>
+            <column name="actor_id" type="int">
+                <constraints foreignKeyName="role_user_id_fk"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                />
+            </column>
+        </createTable>
+
+        <!--Статусы согласования сценариев-->
         <createTable tableName="screenplay_agreement_statuses">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="ScreenPlayAgreementStatus_id_pk" />
@@ -45,6 +62,7 @@
             <column name="code" type="varchar"/>
         </createTable>
 
+        <!--Сценарии-->
         <createTable tableName="screenplays">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="screenplay_id_pk" />
@@ -63,6 +81,25 @@
                              referencedTableName="screenplay_agreement_statuses"
                              referencedColumnNames="id"
                              notNullConstraintName="screenplays_status_id_notnull_k"
+                />
+            </column>
+        </createTable>
+
+        <!--Связь ролей и элементов сценария-->
+        <createTable tableName="screenplay_roles">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="workerTaskExecutionStatus_id_pk" />
+            </column>
+            <column name="role_id" type="int">
+                <constraints foreignKeyName="RolesToScreenplays_role_id_fk"
+                             referencedTableName="roles"
+                             referencedColumnNames="id"
+                />
+            </column>
+            <column name="screenplay_id" type="int">
+                <constraints foreignKeyName="RolesToScreenplays_screenplay_id_fk"
+                             referencedTableName="screenplays"
+                             referencedColumnNames="id"
                 />
             </column>
         </createTable>
