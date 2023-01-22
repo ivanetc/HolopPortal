@@ -18,7 +18,7 @@
     <div th:replace="fragments/mainMenu :: menu">&nbsp;</div>
     <div id="content_container">
         <!--/*@thymesVar id="NewProjectForm" type="com.example.holopportal.project.views.NewProjectForm"*/-->
-        <form th:object="${NewProjectForm}" th:action="@{/api/project}" method="post" action="#">
+        <form th:object="${newProjectForm}" th:action="@{/api/project}" method="post" action="#">
             <div class="card hoverable holop-card">
                 <div class="card-content">
                 <div class="row">
