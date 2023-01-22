@@ -3,20 +3,27 @@ package com.example.holopportal.project.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "public", name = "projects")
+@Table(schema = "public", name = "project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     public int id;
+
+    @Column(name = "lastName")
     public String firstName;
+
+    @Column(name = "firstName")
     public String lastName;
-
+    @Column(name = "age")
     public Integer age;
-
+    @Column(name = "loveImpactValue")
     public Integer loveImpactValue;
+    @Column(name = "honestImpactValue")
     public Integer honestImpactValue;
+    @Column(name = "kindnessImpactValue")
     public Integer kindnessImpactValue;
+    @Column(name = "wishes")
     public String wishes;
 
     public String getWishes() {

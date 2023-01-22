@@ -3,6 +3,7 @@ package com.example.holopportal.project.services;
 import com.example.holopportal.project.entities.Project;
 import com.example.holopportal.project.repository.ProjectRepo;
 import com.example.holopportal.project.views.NewProjectForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Component
 public class ProjectService {
 
-    @Inject
+    @Autowired
     ProjectRepo projectRepo;
 
     public Optional<Project> createProject(NewProjectForm newProjectForm){

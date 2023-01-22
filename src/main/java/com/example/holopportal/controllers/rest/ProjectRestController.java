@@ -32,9 +32,9 @@ public class ProjectRestController {
         redirectView.setContextRelative(true);
 
         if (createdProject.isPresent()) {
-            redirectView.setUrl("/info/" + createdProject.get().id + "?isNew=true" );
+            redirectView.setUrl("/project/" + createdProject.get().id + "?isNew=true" );
         } else {
-            redirectView.setUrl("/info");
+            redirectView.setUrl("/project");
         }
 
         return redirectView;

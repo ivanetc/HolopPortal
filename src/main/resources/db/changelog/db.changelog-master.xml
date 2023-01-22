@@ -181,7 +181,7 @@
             <column name="login" value="nosovas"/>
             <column name="first_name" value="Svetlana"/>
             <column name="last_name" value="Nosova"/>
-            <column name="role_id" value="2"/>
+            <column name="role_id" value="3"/>
             <column name="chat_id" value="200622296"/>
             <column name="telegram_login" value="svtn555"/>
         </insert>
@@ -272,7 +272,7 @@
     </changeSet>
 
     <changeSet id="8" author="admin" labels="projects-data">
-        <createTable tableName="projects">
+        <createTable tableName="project">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="project_id_pk"/>
             </column>

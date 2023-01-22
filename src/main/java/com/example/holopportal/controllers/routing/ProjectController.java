@@ -18,10 +18,10 @@ public class ProjectController {
     UserService userService;
 
 
-    @GetMapping("/info")
+    @GetMapping("/project")
     public String information(Model model) {
         model.addAttribute("currentUser", userService.getCurrentUser().get());
         model.addAttribute("newProjectForm", new NewProjectForm());
-        return "info";
+        return "project";
     }
 }
