@@ -2,28 +2,35 @@ package com.example.holopportal
 
 import com.example.holopportal.user.services.UserService
 import com.example.holopportal.user.views.UserForm
+import org.junit.Before
+import org.junit.jupiter.api.BeforeAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import javax.inject.Inject
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
 
-//@ContextConfiguration(loader = SpringApplicationContextLoader.class, classes = HolopPortalApplication.class)
 @SpringBootTest(
         webEnvironment = NONE,
         classes = HolopPortalApplication
 )
-class UserSpec extends Specification {
+class UserServiceSpec extends Specification {
 
     @Inject
     UserService userService
 
     @Inject
     NamedParameterJdbcOperations jdbcOperations
+
+    def setup() {
+        println "This method is executed before each specification"
+    }
+
+    def setupSpec() {
+        println "This method is executed only one time before all other specifications"
+    }
 
     def "should create new user"() {
         given:

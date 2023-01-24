@@ -16,10 +16,10 @@ public class ScreenplayStatus {
     public String description;
 
     public enum DefaultStatusIds {
-        Draft(0),
-        WaitingForApproving(1),
-        Approved(2),
-        NotApproved(3);
+        Draft(1),
+        WaitingForApproving(2),
+        Approved(3),
+        NotApproved(4);
 
         public final int id;
 

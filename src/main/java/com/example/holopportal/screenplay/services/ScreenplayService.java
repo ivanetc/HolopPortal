@@ -38,6 +38,10 @@ public class ScreenplayService {
         ScreenplayStatus draftStatus = screenplayStatusRepo.findById(ScreenplayStatus.DefaultStatusIds.Draft.id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "status not found"));
 
+        if (screenplayForm == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no data provided");
+        }
+
         Screenplay newScreenplay = new Screenplay();
 
         newScreenplay.code = screenplayForm.getCode();

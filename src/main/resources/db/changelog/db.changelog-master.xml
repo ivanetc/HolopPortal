@@ -277,7 +277,6 @@
     <changeSet id="7" author="admin" labels="tasks-screenplay-testdata">
 
         <insert tableName="screenplays">
-            <column name="id" value="0"/>
             <column name="name" value="Сцена приветствия"/>
             <column name="code" value="welcome-1"/>
             <column name="content" value="Текст сценария. Может быть очень длинным"/>

@@ -1,7 +1,11 @@
 package com.example.holopportal
 
 import com.example.holopportal.screenplay.entities.Screenplay
+import com.example.holopportal.screenplay.entities.ScreenplayStatus
+import com.example.holopportal.screenplay.repository.ScreenplayRepo
 import com.example.holopportal.tasks.entities.TaskType
+import com.example.holopportal.tasks.repository.TaskRepo
+import com.example.holopportal.tasks.repository.TaskTypeRepo
 import com.example.holopportal.tasks.services.TasksService
 import com.example.holopportal.tasks.views.NewTaskForm
 import com.example.holopportal.user.entities.User
@@ -24,24 +28,30 @@ class TaskSpec extends Specification{
     TasksService tasksService
 
     @Inject
+    TaskTypeRepo taskTypeRepo
+
+    @Inject
+    ScreenplayRepo screenplayRepo
+
+    @Inject
     NamedParameterJdbcOperations jdbcOperations
 
-    def "should create new task"(){
+    def "should create new task"() {
         given:
-        TaskType taskType = new TaskType(0)
-        List<User> workers = List<User>()
-        Screenplay screenplay = new Screenplay()
+        def taskType = taskTypeRepo.findById(1)
+        List<User> workers = Collections.emptyList()
+        def screenplay = screenplayRepo.findById(1)
         def description = "Описание задачи"
-        def name = "Имя задачи"
+        def name = "Имя задачи test 1"
         def code = "123"
         def loveImpactValue = 1;
         def honestImpactValue = 2;
         def kindnessImpactValue = 3;
 
         def taskForm = new NewTaskForm(
-                taskType: taskType,
+                taskType: taskType.get(),
                 workers: workers,
-                screenplay: screenplay,
+                screenplay: screenplay.get(),
                 description:description,
                 name: name,
                 code: code,
@@ -54,9 +64,9 @@ class TaskSpec extends Specification{
         def task = tasksService.createTask(taskForm)
 
         then:
-        task.get().taskType == taskType
+        task.get().taskType == taskType.get()
         task.get().workers == workers
-        task.get().screenplay == screenplay
+        task.get().screenplay == screenplay.get()
         task.get().description == description
         task.get().name == name
         task.get().code == code
@@ -66,7 +76,7 @@ class TaskSpec extends Specification{
 
 
         def nameFromBase = jdbcOperations.queryForObject(
-                "SELECT name FROM tasks WHERE id = ${user.get().id}",
+                "SELECT name FROM tasks WHERE id = ${task.get().id}",
                 [:], String
         )
         nameFromBase == name
