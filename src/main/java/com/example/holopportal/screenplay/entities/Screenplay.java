@@ -35,7 +35,7 @@ public class Screenplay {
     @JoinColumn(name = "author_user_id")
     public User author;
 
-    @OneToMany(mappedBy = "screenplay", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "screenplay", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     public Set<Task> tasks;
 
     @OneToOne

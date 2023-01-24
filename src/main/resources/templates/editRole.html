@@ -29,12 +29,12 @@
             <!--/*@thymesVar id="roleForm" type="com.example.holopportal.screenplay.views.RoleForm"*/-->
             <form th:object="${roleForm}" th:action="@{/api/roles}" method="post" style="margin: 40px">
                 <input th:field="*{id}" style="display: none" type="number">
-                <p th:if="${roleForm.getId() == null}" style="font-weight: bold">Новый сценарий</p>
-                <p th:if="${roleForm.getId() != null}" style="font-weight: bold">Редактирование сценария</p>
+                <p th:if="${roleForm.getId() == null}" style="font-weight: bold">Новая роль</p>
+                <p th:if="${roleForm.getId() != null}" style="font-weight: bold">Редактирование роли</p>
                 <div>
-                    <label>Имя</label>
+                    <label>Имя роли</label>
                     <input th:field="*{name}" type="text" class="codeAndNameTask"/>
-                    <label>Код сценария</label>
+                    <label>Описание</label>
                     <input th:field="*{description}" type="text" class="codeAndNameTask"/>
                 </div>
                 <div class="ApplyButtonContainer">

@@ -36,11 +36,11 @@ public class User implements UserDetails {
     @Column(name = "telegram_login")
     private String telegramLogin;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
-    @OneToMany(mappedBy = "actor", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "actor", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Role> screenplayRoles;
 
     public void setId(Integer id) {

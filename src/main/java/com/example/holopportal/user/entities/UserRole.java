@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class UserRole {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public int id;
 
     public String description;
@@ -28,10 +28,10 @@ public class UserRole {
 
     public enum DefaultUserRoles {
 
-        WORKER(0),
-        DIRECTOR(1),
-        SCREEN_WRITER(2),
-        REQUESTER(3);
+        WORKER(1),
+        DIRECTOR(2),
+        SCREEN_WRITER(3),
+        REQUESTER(4);
 
         public final int id;
 

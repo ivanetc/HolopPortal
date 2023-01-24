@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(schema = "public", name = "screenplay_agreement_statuses")
 public class ScreenplayStatus {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public int id;
 
     public String description;

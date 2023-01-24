@@ -103,7 +103,7 @@ public class Task {
     @ManyToOne
     public Screenplay screenplay;
 
-    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.MERGE, orphanRemoval = true)
     public Set<WorkerTaskExecutionStatus> workerStatuses;
 
     public Task() {

@@ -172,25 +172,25 @@
 
     <changeSet id="4" author="admin" labels="user-testdata">
         <insert tableName="user_roles">
-            <column name="id" value="0"/>
+            <column name="id" value="1"/>
             <column name="description" value="Сотрудник"/>
             <column name="code" value="WORKER"/>
         </insert>
 
         <insert tableName="user_roles">
-            <column name="id" value="1"/>
+            <column name="id" value="2"/>
             <column name="description" value="Режиссер"/>
             <column name="code" value="DIRECTOR"/>
         </insert>
 
         <insert tableName="user_roles">
-            <column name="id" value="2"/>
+            <column name="id" value="3"/>
             <column name="description" value="Сценарист"/>
             <column name="code" value="SCREEN_WRITER"/>
         </insert>
 
         <insert tableName="user_roles">
-            <column name="id" value="3"/>
+            <column name="id" value="4"/>
             <column name="description" value="Заказчик"/>
             <column name="code" value="REQUESTER"/>
         </insert>
@@ -199,7 +199,7 @@
             <column name="login" value="ivanetsas"/>
             <column name="first_name" value="Alexander"/>
             <column name="last_name" value="Ivanets"/>
-            <column name="role_id" value="0"/>
+            <column name="role_id" value="1"/>
             <column name="chat_id" value="200622296"/>
             <column name="telegram_login" value="ivanetc"/>
         </insert>
@@ -208,7 +208,7 @@
             <column name="login" value="khilike"/>
             <column name="first_name" value="Egor"/>
             <column name="last_name" value="Khilik"/>
-            <column name="role_id" value="1"/>
+            <column name="role_id" value="2"/>
             <column name="chat_id" value="200622296"/>
             <column name="telegram_login" value="khilikegor"/>
         </insert>
@@ -217,7 +217,7 @@
             <column name="login" value="nosovas"/>
             <column name="first_name" value="Svetlana"/>
             <column name="last_name" value="Nosova"/>
-            <column name="role_id" value="2"/>
+            <column name="role_id" value="3"/>
             <column name="chat_id" value="200622296"/>
             <column name="telegram_login" value="svtn555"/>
         </insert>
@@ -249,32 +249,26 @@
 
     <changeSet id="6" author="admin" labels="tasks-statuses-testdata">
         <insert tableName="task_execution_statuses">
-            <column name="id" value="0"/>
             <column name="description" value="Ожидает начала"/>
             <column name="code" value="WaitingForStart"/>
         </insert>
         <insert tableName="task_execution_statuses">
-            <column name="id" value="1"/>
             <column name="description" value="Ожидает подтверждения"/>
             <column name="code" value="WaitingForConfirmation"/>
         </insert>
         <insert tableName="task_execution_statuses">
-            <column name="id" value="2"/>
             <column name="description" value="Выполняется"/>
             <column name="code" value="InWork"/>
         </insert>
         <insert tableName="task_execution_statuses">
-            <column name="id" value="3"/>
             <column name="description" value="Успешно завершено"/>
             <column name="code" value="Successful"/>
         </insert>
         <insert tableName="task_execution_statuses">
-            <column name="id" value="4"/>
             <column name="description" value="Неуспешно завершено"/>
             <column name="code" value="Failed"/>
         </insert>
         <insert tableName="task_execution_statuses">
-            <column name="id" value="5"/>
             <column name="description" value="Отменена режиссером"/>
             <column name="code" value="Canceled"/>
         </insert>
@@ -292,17 +286,17 @@
         </insert>
 
         <insert tableName="task_types">
-            <column name="id" value="0"/>
+            <column name="id" value="1"/>
             <column name="description" value="Новая роль"/>
         </insert>
 
         <insert tableName="task_types">
-            <column name="id" value="1"/>
+            <column name="id" value="2"/>
             <column name="description" value="Задание на сценарий"/>
         </insert>
 
         <insert tableName="task_types">
-            <column name="id" value="2"/>
+            <column name="id" value="3"/>
             <column name="description" value="Задание на декорации"/>
         </insert>
     </changeSet>

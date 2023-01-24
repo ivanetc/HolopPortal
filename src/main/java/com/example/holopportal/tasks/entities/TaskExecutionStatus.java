@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class TaskExecutionStatus {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public int id;
 
     public String description;
@@ -24,11 +24,12 @@ public class TaskExecutionStatus {
     }
 
     public enum DefaultStatusIds {
-        WaitingForStart(0), WaitingForConfirmation(1),
-        InWork(2),
-        Successful(3),
-        Failed(4),
-        Canceled(5);
+        WaitingForStart(1),
+        WaitingForConfirmation(2),
+        InWork(3),
+        Successful(4),
+        Failed(5),
+        Canceled(6);
 
         public final int id;
 
