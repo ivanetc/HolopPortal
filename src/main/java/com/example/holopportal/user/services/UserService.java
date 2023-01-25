@@ -11,12 +11,14 @@ import com.example.holopportal.user.repository.UserRoleRepo;
 import com.example.holopportal.user.views.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class UserService implements UserDetailsService {
@@ -36,6 +38,11 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> createNewUser(UserForm userForm) {
         Optional<UserRole> role = userRoleRepo.findById(UserRole.DefaultUserRoles.WORKER.id); // todo guest
+
+        if (userForm == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no data provided");
+        }
+
         User user = new User(
                 userForm.login,
                 userForm.firstName,

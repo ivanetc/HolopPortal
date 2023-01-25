@@ -10,7 +10,9 @@ import com.example.holopportal.tasks.services.TasksService
 import com.example.holopportal.tasks.views.NewTaskForm
 import com.example.holopportal.user.entities.User
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
+import org.springframework.web.server.ResponseStatusException
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -83,5 +85,14 @@ class TaskSpec extends Specification{
 
         cleanup:
         jdbcOperations.update("DELETE FROM tasks WHERE name = '$name'", [:])
+    }
+        def "should throw 400 when data is missed"(){
+        when:
+        tasksService.createTask(null)
+
+        then:
+        def exception = thrown(ResponseStatusException.class)
+        exception.reason == "no data provided"
+        exception.status == HttpStatus.BAD_REQUEST
     }
 }

@@ -109,6 +109,9 @@ public class TasksService {
     }
 
     public Optional<Task> createTask(NewTaskForm newTaskForm) {
+        if (newTaskForm == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "no data provided");
+        }
         Task newTask = new Task();
         fillTaskFromForm(newTask, newTaskForm);
         Task savedTask = taskRepo.save(newTask);

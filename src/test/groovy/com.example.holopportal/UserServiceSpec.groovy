@@ -5,7 +5,9 @@ import com.example.holopportal.user.views.UserForm
 import org.junit.Before
 import org.junit.jupiter.api.BeforeAll
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
+import org.springframework.web.server.ResponseStatusException
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -63,5 +65,15 @@ class UserServiceSpec extends Specification {
 
         cleanup:
         jdbcOperations.update("DELETE FROM users WHERE login = '$login'", [:])
+    }
+
+    def "should throw 400 when data is missed"(){
+        when:
+        userService.createNewUser(null)
+
+        then:
+        def exception = thrown(ResponseStatusException.class)
+        exception.reason == "no data provided"
+        exception.status == HttpStatus.BAD_REQUEST
     }
 }
