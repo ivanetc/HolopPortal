@@ -301,6 +301,20 @@
         </insert>
     </changeSet>
 
+    <changeSet id="8" author="admin" labels="projects-data">
+        <createTable tableName="project">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="project_id_pk"/>
+            </column>
+            <column name="firstName" type="varchar"/>
+            <column name="lastName" type="varchar"/>
+            <column name="wishes" type="varchar"/>
+            <column name="age" type="int"/>
+            <column name="loveImpactValue" type="int"/>
+            <column name="honestImpactValue" type="int"/>
+            <column name="kindnessImpactValue" type="int"/>
+        </createTable>
+    </changeSet>
 
 <!--
     <changeSet id="7" author="khilik">

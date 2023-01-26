@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+  <!-- JavaScript file for text editor -->
+  <script src="../../../resources/static/js/textEditor.js"></script>
+  <!-- FrontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+</head>
+<body>
+<div class="screenplayContainer" >
+  <div class="optionsTextEditor">
+    <button id="bold" class="option-button format buttonTextEditor">
+      <i class="fa-solid fa-bold"></i>
+    </button>
+    <button id="italic" class="option-button format buttonTextEditor">
+      <i class="fa-solid fa-italic"></i>
+    </button>
+    <button id="underline" class="option-button format buttonTextEditor">
+      <i class="fa-solid fa-underline"></i>
+    </button>
+    <button id="strikethrough" class="option-button format buttonTextEditor">
+      <i class="fa-solid fa-strikethrough"></i>
+    </button>
+    <button id="superscript" class="option-button script buttonTextEditor">
+      <i class="fa-solid fa-superscript"></i>
+    </button>
+    <button id="subscript" class="option-button script buttonTextEditor">
+      <i class="fa-solid fa-subscript"></i>
+    </button>
+
+    <!-- List -->
+    <button id="insertOrderedList" class="option-button buttonTextEditor">
+      <div class="fa-solid fa-list-ol"></div>
+    </button>
+    <button id="insertUnorderedList" class="option-button buttonTextEditor">
+      <div class="fa-solid fa-list"></div>
+    </button>
+
+    <!-- Undo/Redo -->
+    <button id="undo" class="option-button buttonTextEditor">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+    <button id="redo" class="option-button buttonTextEditor">
+      <i class="fa-solid fa-rotate-right"></i>
+    </button>
+
+    <!-- Link -->
+    <button id="createLink" class="adv-option-button buttonTextEditor">
+      <i class="fa fa-link"></i>
+    </button>
+    <button id="unlink" class="option-button buttonTextEditor">
+      <i class="fa fa-unlink"></i>
+    </button>
+    <!-- Alignment -->
+    <button id="justifyLeft" class="option-button align buttonTextEditor">
+      <i class="fa-solid fa-align-left"></i>
+    </button>
+    <button id="justifyCenter" class="option-button align buttonTextEditor">
+      <i class="fa-solid fa-align-center"></i>
+    </button>
+    <button id="justifyRight" class="option-button align buttonTextEditor">
+      <i class="fa-solid fa-align-right"></i>
+    </button>
+    <button id="justifyFull" class="option-button align buttonTextEditor">
+      <i class="fa-solid fa-align-justify"></i>
+    </button>
+    <button id="indent" class="option-button spacing buttonTextEditor">
+      <i class="fa-solid fa-indent"></i>
+    </button>
+    <button id="outdent" class="option-button spacing buttonTextEditor">
+      <i class="fa-solid fa-outdent"></i>
+    </button>
+
+    <!-- Heading -->
+    <select id="formatBlock" class="adv-option-button selectTextEditorOption">
+      <option value="H1">H1</option>
+      <option value="H2">H2</option>
+      <option value="H3">H3</option>
+      <option value="H4">H4</option>
+      <option value="H5">H5</option>
+      <option value="H6">H6</option>
+    </select>
+
+    <!-- Front -->
+    <select id="font-name" class="adv-option-button selectTextEditorOption"></select>
+    <select id="font-size" class="adv-option-button selectTextEditorOption"></select>
+
+    <!-- Color -->
+    <div class="input-wrapper">
+      <input type="color" id="foreColor" class="adv-option-button buttonTextEditor"/>
+      <label for="foreColor">Font Color</label>
+    </div>
+    <div class="input-wrapper">
+      <input type="color" id="backColor" class="adv-option-button buttonTextEditor"/>
+      <label for="backColor">Highlight Color</label>
+    </div>
+  </div>
+  <div id="text-input" contenteditable="true" th:field="*{content}">
+  </div>
+</div>
+</body>
+</html>

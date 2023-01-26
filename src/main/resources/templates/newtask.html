@@ -24,7 +24,7 @@
        <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
       <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">
         <p class="personalAndTypeText">Персонал:</p>
-        <select th:field="*{workers}" multiple class="widthMenu">
+        <select th:field="*{workesrs}" multiple class="widthMenu">
           <th:block th:each="worker : ${all_workers}">
             <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
             <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
