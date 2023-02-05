@@ -2,6 +2,7 @@ package com.example.holopportal.telegram_bot;
 
 import com.example.holopportal.user.entities.User;
 import com.example.holopportal.user.services.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -13,6 +14,12 @@ import java.util.Optional;
 public class TelegramBot extends TelegramLongPollingBot {
 
     private static TelegramBot telegramBot;
+
+    @Value("${bot.username}")
+    String botUserName;
+
+    @Value("${bot.token}")
+    String botToken;
 
     public static TelegramBot getTelegramBot() {
         if (telegramBot == null) {
@@ -30,12 +37,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "holop_itmo_bot";
+        return botUserName;
     }
 
     @Override
     public String getBotToken() {
-        return "5451762902:AAHYO-oLRHuPSNTHtcBLNYAG_PWYR_nnygE";
+        return botToken;
     }
 
     @Override
