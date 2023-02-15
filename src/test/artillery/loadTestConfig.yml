@@ -1,0 +1,21 @@
+config:
+  target: 'http://localhost:8080/login'
+  phases:
+    - duration: 60
+      arrivalRate: 100
+scenarios:
+  - flow:
+    - get:
+        url: "/get"
+
+
+#      fields:
+#        - "username"
+#        - "password"
+#  scenarios:
+#    - flow:
+#        - post:
+#            url: "/login"
+#            json:
+#              username: "{{ ivanetsas }}"
+#              password: "{{ password }}"

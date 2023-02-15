@@ -17,7 +17,8 @@
         <div></div>
         <!--/*@thymesVar id="currentUser" type="com.example.holopportal.user.entities.User"*/-->
         <div id="usernamePosition" sec:authorize="isAuthenticated()">
-            <p th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}"/>
+            <p th:if="${currentUser.firstName}"></p>
+            <p th:unless="${currentUser.firstName}" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}"></p>
 
             <a href="#" id="userIconPosition" data-target="slide-out" class="sidenav-trigger">
                 <img src="/images/user_icon.png" alt="<>"/>

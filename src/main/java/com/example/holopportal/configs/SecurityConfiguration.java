@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public BCryptPasswordEncoder bCryptPasswordEncoder;
+    private HttpSecurity http;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -31,8 +32,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Доступ только для не зарегистрированных пользователей
                 .antMatchers("/registration").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/news").hasRole("USER")
+                .antMatchers("/tasks/new").hasAuthority("DIRECTOR")
+                .antMatchers("/screenplay/new").hasAuthority("SCREEN_WRITER")
+                .antMatchers("/prediction").hasAnyAuthority("DIRECTOR","REQUESTER")
                 //Доступ разрешен всем пользователей
                 .antMatchers("/resources/**", "/css/**", "/js/**", "/actuator/**", "/api/user/registration").permitAll()
                 //Все остальные страницы требуют аутентификации
@@ -42,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll().logoutSuccessUrl("/login");
+
     }
 
     @Autowired
