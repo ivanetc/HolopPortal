@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:8080/login"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+  payload:
+    path: "./data/auth.csv"
+    fields:
+      - "login"
+      - "password"
+
+scenarios:
+  - name: "Authenticating users"
+    flow:
+      - post:
+          url: "/"
+          json:
+            login: "{{ login }}"
+            password: "{{ password }}"

@@ -1,0 +1,48 @@
+config:
+  headers:
+    Cookie: "Idea-a1c06431=606b0e24-777b-4c2b-b895-1a5f10246830; _pk_id.1.1fff=c62b47a6c4bd4378.1672401601.; _ym_uid=1673210414938100896; _ym_d=1673210414; Idea-a1c06432=e3f95848-edc4-4d52-9d85-a29137dd1fb2; _ym_isad=1; JSESSIONID=76B0D43273E252BC72390E6A73E2DD5A"
+  target: 'http://localhost:8080'
+  phases:
+    - duration: 60
+#      arrivalRate: 10
+      arrivalCount: 10
+      rampTo: 300
+  payload:
+    path: ".data/taskData.csv"
+    fields:
+      - "worker"
+      - "task_type"
+      - "screenplay"
+      - "task_name"
+      - "task_code"
+      - "task_description"
+      - "kindness_value"
+      - "love_value"
+      - "honest_value"
+
+  scenarios:
+    - name: "New Task Form"
+      flow:
+        - get:
+            url: "/tasks/new"
+        - post:
+            url: "/tasks/new"
+            json:
+              workers: "{{ worker }}"
+              taskType: "{{ task_type }}"
+              screenplay: "{{ screenplay }}"
+              name: "{{ task_name }}"
+              code: "{{ task_code }}"
+              description: "{{ task_description }}"
+              kindnessImpactValue: {{ kindness_value }}
+              loveImpactValue: {{ love_value }}
+              honestImpactValue: {{ honest_value }}
+
+#      name: Warm up
+#    - duration: 120
+#      arrivalRate: 5
+#      rampTo: 50
+#      name: Ramp up load
+#    - duration: 600
+#      arrivalRate: 50
+#      name: Sustained load
