@@ -16,6 +16,8 @@ repositories {
 dependencies {
     implementation 'org.liquibase:liquibase-core:4.10.0'
     implementation 'org.postgresql:postgresql:42.3.4'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '6.8'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
