@@ -23,7 +23,9 @@ describe('header and menu', async function() {
         opts.director_password = 'password'
     });
 
-    async function auth(browser, login, password) {
+    async function auth(host, browser, login, password) {
+        await browser.url(host);
+
         await browser.$('#username').addValue(login);
         await browser.$('#password').addValue(password);
         await browser.$('.singInButton').click();
@@ -35,8 +37,7 @@ describe('header and menu', async function() {
     }
 
     it('check director username and role labels', async ({ browser, host, auth_params }) => {
-        await browser.url(host);
-        await auth(browser, auth_params.director.login, auth_params.director.password);
+        await auth(host, browser, auth_params.director.login, auth_params.director.password);
 
         const systemTitle = await browser.$('#systemName').getText();
         assert.equal(systemTitle, 'Информационная система Холоп');
@@ -50,8 +51,7 @@ describe('header and menu', async function() {
     });
 
     it('check worker username and role labels', async ({ browser, host, auth_params }) => {
-        await browser.url(host);
-        await auth(browser, auth_params.worker.login, auth_params.worker.password);
+        await auth(host, browser, auth_params.worker.login, auth_params.worker.password);
 
         const systemTitle = await browser.$('#systemName').getText();
         assert.equal(systemTitle, 'Информационная система Холоп');
