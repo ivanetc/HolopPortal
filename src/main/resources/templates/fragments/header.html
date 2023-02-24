@@ -37,7 +37,7 @@
                 <a href="#user"><img class="circle" src="images/no_photo_light.png"></a>
                 <a><span class="white-text email" th:text="${currentUser.firstName} + ' ' + ${currentUser.lastName}"/></a>
 <!--                <a href="#name"><span class="white-text name">John Doe</span></a>-->
-                <a href="#email"><span class="white-text email" th:text="${currentUser.getRole().description}"/></a>
+                <a href="#email"><span class="white-text email" id="user-position-label" th:text="${currentUser.getRole().description}"/></a>
             </div></li>
             <li><a href="#!">Редактировать профиль</a></li>
             <li><div class="divider"></div></li>
