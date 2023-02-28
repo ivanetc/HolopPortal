@@ -48,7 +48,7 @@ describe('create screenplay', async function () {
 
         await browser.$('#menu_container > a:nth-child(6)').click();
         await browser.pause(60);
-        await browser.$('#name').addValue('Новый сценарйи');
+        await browser.$('#name').addValue('Новый сценарий');
         await browser.$('#code').addValue('01');
         await browser.$('#content').addValue('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.');
         await browser.$('#NewTaskContainer\\  > form > div.ApplyButtonContainer > input').click();
@@ -64,6 +64,44 @@ describe('create screenplay', async function () {
         await browser.pause(200);
         await browser.$('#content_container > div:nth-child(2) > div > div > div > div:nth-child(5) > button:nth-child(1)').click();
         await browser.pause(200);
+
+        await logout(browser, host);
+    });
+
+    it('director create task', async ({browser, host, auth_params}) => {
+        await auth(host, browser, auth_params.director.login, auth_params.director.password);
+        await browser.$('#menu_container > a:nth-child(3)').click();
+        await browser.pause(200);
+        await browser.$('#workers_select > div > input').click();
+        await browser.pause(200);
+        await browser.$('#workers_select > div > ul > li:nth-child(1)').click();
+        await browser.pause(200);
+        await browser.$('.qualitiesLabel').click(); // клик в пустоту чтобы скрыть выпадающий список
+        await browser.pause(200);
+
+        await browser.$('#task_type_select > div > input').click();
+        await browser.pause(200);
+        await browser.$('#task_type_select > div > ul > li:nth-child(1)').click();
+        await browser.pause(200);
+        await browser.$('.qualitiesLabel').click(); // клик в пустоту чтобы скрыть выпадающий список
+        await browser.pause(200);
+
+        await browser.$('#screenplay_select > div > input').click();
+        await browser.pause(200);
+        await browser.$('#screenplay_select > div > ul > li:nth-child(1)').click();
+        await browser.pause(200);
+        await browser.$('.qualitiesLabel').click(); // клик в пустоту чтобы скрыть выпадающий список
+        await browser.pause(200);
+
+        await browser.$('#name').addValue('Новая задача из автотеста');
+        await browser.$('#code').addValue('01');
+        await browser.$('#description').addValue('description');
+        await browser.$('#kindnessImpactValue').addValue(1);
+        await browser.$('#loveImpactValue').addValue(1);
+        await browser.$('#honestImpactValue').addValue(1);
+
+        await browser.$('.AcceptButton').click();
+        await browser.pause(500);
 
         await logout(browser, host);
     });

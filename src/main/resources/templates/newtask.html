@@ -24,24 +24,25 @@
        <!--/*@thymesVar id="newTaskForm" type="com.example.holopportal.tasks.views.NewTaskForm"*/-->
       <form th:object="${newTaskForm}" th:action="@{/api/tasks}" method="post">
         <p class="personalAndTypeText">Персонал:</p>
-        <select th:field="*{workers}" multiple class="widthMenu">
-          <th:block th:each="worker : ${all_workers}">
-            <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
-            <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
-          </th:block>
-        </select>
+        <div id="workers_select">
+          <select th:field="*{workers}" multiple class="widthMenu">
+            <th:block th:each="worker : ${all_workers}">
+              <!--/*@thymesVar id="worker" type="com.example.holopportal.user.entities.User"*/-->
+              <option th:value="${{worker}}" th:text="${worker.firstName} + ' ' +  ${worker.lastName}"></option>
+            </th:block>
+          </select>
+        </div>
         <p class="personalAndTypeText">Тип задачи:</p>
-        <div class="input-field col s12">
+        <div id="task_type_select" class="input-field col s12">
           <select th:field="*{taskType}" class="widthMenu">
-            <tr th:block th:each="type : ${taskTypes}">
+            <th:block th:each="type : ${taskTypes}">
               <!--/*@thymesVar id="type" type="com.example.holopportal.tasks.entities.TaskType"*/-->
               <option th:value="${{type}}" th:text="${type.description}"></option>
             </th:block>
-            </tr>
           </select>
         </div>
         <p class="personalAndTypeText">Связанный сценарий:</p>
-        <div class="input-field">
+        <div id="screenplay_select" class="input-field">
           <select th:field="*{screenplay}" class="widthMenu">
             <th:block th:each="screenplay : ${allSreenplays}">
               <!--/*@thymesVar id="screenplay" type="com.example.holopportal.screenplay.entities.Screenplay"*/-->
